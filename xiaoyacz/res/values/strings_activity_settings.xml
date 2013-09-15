@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="title_activity_settings">设置</string>
+
+    <!-- Strings related to Settings -->
+
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">设置</string>
+    <string name="pref_download_audio">自动下载音频文件</string>
+
+</resources>
