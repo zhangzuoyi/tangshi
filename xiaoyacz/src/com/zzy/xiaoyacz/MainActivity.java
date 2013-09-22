@@ -129,19 +129,28 @@ public class MainActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder vh;
 			if(convertView==null){
 				LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				convertView=inflater.inflate(R.layout.list_item, parent,false);
+				vh=new ViewHolder();
+				vh.imageView=(ImageView) convertView.findViewById(R.id.imageView1);
+				vh.textView1=(TextView) convertView.findViewById(R.id.textView1);
+				vh.textView2=(TextView) convertView.findViewById(R.id.textView2);
+				convertView.setTag(vh);
+			}else{
+				vh=(ViewHolder) convertView.getTag();
 			}
-			ImageView iv=(ImageView) convertView.findViewById(R.id.imageView1);
-			TextView tv1=(TextView) convertView.findViewById(R.id.textView1);
-			TextView tv2=(TextView) convertView.findViewById(R.id.textView2);
 			TangShi ts=data.get(position);
-			tv1.setText(ts.getTitle());
-			tv2.setText(ts.getAuthor());
-			iv.setImageResource(imgs[0]);
+			vh.textView1.setText(ts.getTitle());
+			vh.textView2.setText(ts.getAuthor());
+			vh.imageView.setImageResource(imgs[0]);
 			return convertView;
 		}
-		
+	}
+	private class ViewHolder{
+		public ImageView imageView;
+		public TextView textView1;
+		public TextView textView2;
 	}
 }

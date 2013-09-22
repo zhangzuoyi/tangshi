@@ -42,7 +42,7 @@ import com.zzy.xiaoyacz.util.FileUtil;
 public class DetailActivity extends Activity {
 	TangShi ts;
 	ImageButton playPauseButton;
-	ImageButton recordButton;
+//	ImageButton recordButton;
 	MediaPlayer m_mediaPlayer;
 	String aliyunUrl="http://oss.aliyuncs.com/object_test/tangshi/";
 	boolean isPrepare=false;//音频文件是否已经设置好
@@ -71,8 +71,8 @@ public class DetailActivity extends Activity {
 
 				@Override
 				public void run() {
-//					m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
-					m_mediaPlayer=new MediaPlayer();
+					m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+//					m_mediaPlayer=new MediaPlayer();
 					m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
 
 						@Override
@@ -85,7 +85,7 @@ public class DetailActivity extends Activity {
 						@Override
 						public void onClick(View v) {
 							if(!isPrepare){
-								prepareAudio();
+//								prepareAudio();//暂先不做缓存
 								isPrepare=true;
 							}
 							
@@ -103,8 +103,9 @@ public class DetailActivity extends Activity {
 			});
 			
 		}
-		
-		recordButton=(ImageButton) findViewById(R.id.button2);
+	}
+	private void setRecordButton(){
+		/*recordButton=(ImageButton) findViewById(R.id.button2);
 		recordButton.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -132,10 +133,8 @@ public class DetailActivity extends Activity {
 
 			}
 			
-		});
-		
+		});*/
 	}
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private void prepareAudio(){
 		if(FileUtil.IsExternalStorageAvailableAndWriteable()){
 			Toast.makeText(DetailActivity.this,"storage writeable:true", Toast.LENGTH_SHORT).show();
@@ -158,7 +157,6 @@ public class DetailActivity extends Activity {
 					 InputStream in=openHttpGETConnection(aliyunUrl+ts.getAudio());
 					 byte[] bs=new byte[1024];
 					 try {
-						 file.setWritable(true);
 						OutputStream out=new FileOutputStream(file);
 						int length=in.read(bs);
 						while(length>0){
