@@ -11,16 +11,26 @@
         android:padding="10dp" >
 
         <Button
-            android:id="@+id/list_view_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/listButton"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="@drawable/button_selector"
             android:text="@string/list" />
 
         <Button
-            android:id="@+id/grid_view_tab"
-            android:layout_width="wrap_content"
+            android:id="@+id/byTypeButton"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/by_type" />
+        <Button
+            android:id="@+id/byAuthorButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/by_author" />
     </LinearLayout>
 
     <View

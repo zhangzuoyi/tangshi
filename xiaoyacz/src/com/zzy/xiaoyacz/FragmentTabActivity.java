@@ -20,6 +20,6 @@ public class FragmentTabActivity extends FragmentActivity {
         // launch the initial tab.
         FragmentManager fm = getSupportFragmentManager();
         TabFragment tabFragment = (TabFragment) fm.findFragmentById(R.id.fragment_tab);
-//        tabFragment.gotoListView();
+        tabFragment.gotoListView();
     }
 }

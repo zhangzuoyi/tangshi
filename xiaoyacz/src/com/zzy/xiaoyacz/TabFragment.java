@@ -14,7 +14,8 @@ import android.widget.Button;
 
 public class TabFragment extends Fragment {
 	private static final int LIST_STATE = 0x1;
-    private static final int GRID_STATE = 0x2;
+    private static final int TYPE_STATE = 0x2;
+    private static final int AUTHOR_STATE = 0x3;
     
     private int mTabState;
     
@@ -25,10 +26,11 @@ public class TabFragment extends Fragment {
         // Grab the tab buttons from the layout and attach event handlers. The code just uses standard
         // buttons for the tab widgets. These are bad tab widgets, design something better, this is just
         // to keep the code simple.
-        Button listViewTab = (Button) view.findViewById(R.id.list_view_tab);
-        Button gridViewTab = (Button) view.findViewById(R.id.grid_view_tab);
+        Button listButton = (Button) view.findViewById(R.id.listButton);
+        Button typeButton = (Button) view.findViewById(R.id.byTypeButton);
+        Button authorButton = (Button) view.findViewById(R.id.byAuthorButton);
         
-        listViewTab.setOnClickListener(new OnClickListener() {
+        listButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Switch the tab content to display the list view.
@@ -36,11 +38,19 @@ public class TabFragment extends Fragment {
             }
         });
         
-        gridViewTab.setOnClickListener(new OnClickListener() {
+        typeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Switch the tab content to display the grid view.
-                gotoGridView();
+                gotoTypeView();
+            }
+        });
+        
+        authorButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Switch the tab content to display the grid view.
+                gotoAuthorView();
             }
         });
         
@@ -65,18 +75,34 @@ public class TabFragment extends Fragment {
                 // currently inside R.id.fragment_content and add the new Fragment
                 // in its place.
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragment_content, new ByTypeFragment());
+                ft.replace(R.id.fragment_content, new ListAllFragment());
                 ft.commit();
             }
         }
     }
     
-    public void gotoGridView() {
+    public void gotoTypeView() {
         // See gotoListView(). This method does the same thing except it loads
         // the grid tab.
         
-        if (mTabState != GRID_STATE) {
-            mTabState = GRID_STATE;
+        if (mTabState !=TYPE_STATE) {
+            mTabState = TYPE_STATE;
+            
+            FragmentManager fm = getFragmentManager();
+            
+            if (fm != null) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_content, new ByTypeFragment());
+                ft.commit();
+            }
+        }
+    }
+    public void gotoAuthorView() {
+        // See gotoListView(). This method does the same thing except it loads
+        // the grid tab.
+        
+        if (mTabState !=AUTHOR_STATE) {
+            mTabState = AUTHOR_STATE;
             
             FragmentManager fm = getFragmentManager();
             

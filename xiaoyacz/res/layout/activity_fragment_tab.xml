@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment_tab"
-        android:name="net.neilgoodman.android.fragmenttabstutorial.fragment.TabFragment"
+        android:name="com.zzy.xiaoyacz.TabFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     

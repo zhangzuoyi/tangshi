@@ -15,15 +15,19 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Black.NoTitleBar" >
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
-            android:name="com.zzy.xiaoyacz.MainActivity"
+            android:name="com.zzy.xiaoyacz.FragmentTabActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zzy.xiaoyacz.MainActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.zzy.xiaoyacz.DetailActivity"

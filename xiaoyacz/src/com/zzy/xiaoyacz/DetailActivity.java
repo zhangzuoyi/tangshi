@@ -23,9 +23,11 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
@@ -46,7 +48,7 @@ public class DetailActivity extends Activity {
 	MediaPlayer m_mediaPlayer;
 	String aliyunUrl="http://oss.aliyuncs.com/object_test/tangshi/";
 	boolean isPrepare=false;//音频文件是否已经设置好
-	Handler handler=new Handler();
+	Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,41 +68,7 @@ public class DetailActivity extends Activity {
 		playPauseButton=(ImageButton) findViewById(R.id.button1);
 		playPauseButton.setEnabled(false);
 		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){
-			
-			handler.post(new Runnable(){
-
-				@Override
-				public void run() {
-					m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
-//					m_mediaPlayer=new MediaPlayer();
-					m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
-
-						@Override
-						public void onCompletion(MediaPlayer arg0) {
-							playPauseButton.setImageResource(android.R.drawable.ic_media_play);
-						}
-						
-					});
-					playPauseButton.setOnClickListener(new OnClickListener(){
-						@Override
-						public void onClick(View v) {
-							if(!isPrepare){
-//								prepareAudio();//暂先不做缓存
-								isPrepare=true;
-							}
-							
-							//最后播放音频
-							
-							if(m_mediaPlayer.isPlaying()) {
-								pauseMP();
-							}else{
-								startMP();
-							}
-						}
-					});
-					playPauseButton.setEnabled(true);
-				}
-			});
+			new MediaPlayerTask().execute();
 			
 		}
 	}
@@ -238,4 +206,45 @@ public class DetailActivity extends Activity {
 		return true;
 	}
 
+	private class MediaPlayerTask extends AsyncTask<Void,Void,Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+//			m_mediaPlayer=new MediaPlayer();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
+
+				@Override
+				public void onCompletion(MediaPlayer arg0) {
+					playPauseButton.setImageResource(android.R.drawable.ic_media_play);
+				}
+				
+			});
+			playPauseButton.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if(!isPrepare){
+//						prepareAudio();//暂先不做缓存
+						isPrepare=true;
+					}
+					
+					//最后播放音频
+					
+					if(m_mediaPlayer.isPlaying()) {
+						pauseMP();
+					}else{
+						startMP();
+					}
+				}
+			});
+			playPauseButton.setEnabled(true);
+		}
+		
+		
+	}
 }

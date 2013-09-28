@@ -55,6 +55,17 @@ public class MyDB {
 		}
 		return list;
 	}
+	
+	public List<String> authorList(){
+		Cursor cur=db.rawQuery("select distinct "+Constants.AUTHOR+" from "+Constants.TABLE_NAME, null);
+		List<String> result=new ArrayList<String>();
+		if(cur.moveToFirst()){
+			do{
+				result.add(cur.getString(0));
+			}while(cur.moveToNext());
+		}
+		return result;
+	}
 
 	public Cursor getdiaries() {
 		Cursor c = db.query(Constants.TABLE_NAME, null, null, null, null, null,
