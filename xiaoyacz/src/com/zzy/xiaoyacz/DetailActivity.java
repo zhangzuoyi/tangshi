@@ -67,6 +67,7 @@ public class DetailActivity extends Activity {
 		
 		playPauseButton=(ImageButton) findViewById(R.id.button1);
 		playPauseButton.setEnabled(false);
+		playPauseButton.setVisibility(View.INVISIBLE);
 		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){
 			new MediaPlayerTask().execute();
 			
@@ -243,6 +244,7 @@ public class DetailActivity extends Activity {
 				}
 			});
 			playPauseButton.setEnabled(true);
+			playPauseButton.setVisibility(View.VISIBLE);
 		}
 		
 		

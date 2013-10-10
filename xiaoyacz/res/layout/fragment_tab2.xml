@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_color"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="10dip"
+        />
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        >
+        <TextView
+            android:id="@+id/listButton"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/list"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:background="@drawable/button_selector"
+            android:focusable="true"
+            android:clickable="true"
+            />
+        <View android:layout_width="2px" android:layout_height="fill_parent"
+            android:background="#FFFFFFFF"/>
+        <TextView
+            android:id="@+id/byTypeButton"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/by_type" 
+            android:gravity="center"
+            android:textColor="#fff"
+            android:background="@drawable/button_selector"
+            android:focusable="true"
+            android:clickable="true"
+            />
+        <View android:layout_width="2px" android:layout_height="fill_parent"
+            android:background="#FFFFFFFF"/>
+        <TextView
+            android:id="@+id/byAuthorButton"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/by_author" 
+            android:gravity="center"
+            android:textColor="#fff"
+            android:background="@drawable/button_selector"
+            android:focusable="true"
+            android:clickable="true"
+            />
+    </LinearLayout>
+</LinearLayout>

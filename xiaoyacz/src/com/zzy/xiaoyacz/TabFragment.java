@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class TabFragment extends Fragment {
 	private static final int LIST_STATE = 0x1;
@@ -21,27 +24,37 @@ public class TabFragment extends Fragment {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab2, container, false);
         
         // Grab the tab buttons from the layout and attach event handlers. The code just uses standard
         // buttons for the tab widgets. These are bad tab widgets, design something better, this is just
         // to keep the code simple.
-        Button listButton = (Button) view.findViewById(R.id.listButton);
-        Button typeButton = (Button) view.findViewById(R.id.byTypeButton);
-        Button authorButton = (Button) view.findViewById(R.id.byAuthorButton);
-        
+        final TextView listButton = (TextView) view.findViewById(R.id.listButton);
+        final TextView typeButton = (TextView) view.findViewById(R.id.byTypeButton);
+        final TextView authorButton = (TextView) view.findViewById(R.id.byAuthorButton);
+//        Button listButton = (Button) view.findViewById(R.id.listButton);
+//        Button typeButton = (Button) view.findViewById(R.id.byTypeButton);
+//        Button authorButton = (Button) view.findViewById(R.id.byAuthorButton);
+
         listButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Switch the tab content to display the list view.
                 gotoListView();
             }
         });
+//        listButton.setOnTouchListener(new OnTouchListener(){
+//
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				gotoListView();
+//				return false;
+//			}
+//        	
+//        });
         
         typeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Switch the tab content to display the grid view.
                 gotoTypeView();
             }
         });
@@ -49,7 +62,6 @@ public class TabFragment extends Fragment {
         authorButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Switch the tab content to display the grid view.
                 gotoAuthorView();
             }
         });
