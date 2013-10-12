@@ -5,10 +5,10 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="5dp"
         android:src="@android:drawable/ic_dialog_info" />
     

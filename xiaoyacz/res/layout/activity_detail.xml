@@ -27,6 +27,7 @@
          android:gravity="center"
         android:textSize="20sp"
         android:layout_marginTop="5dip"
+        android:lineSpacingMultiplier="1.5"
         android:text="@string/hello_world" />
     <TextView
         android:id="@+id/explain"

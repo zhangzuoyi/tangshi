@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout 
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_alignParentBottom="true">
+        <EditText
+        android:id="@+id/searchCondition"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_toLeftOf="@+id/searchButton"
+        android:hint="@string/search_hint" />
+      <Button 
+        android:id="@+id/searchButton"
+        android:layout_alignParentRight="true"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="@string/search"/>
+    </RelativeLayout>
+    <ListView android:layout_above="@+id/footer"
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+    android:layout_height="fill_parent" ></ListView>
+
+</RelativeLayout>

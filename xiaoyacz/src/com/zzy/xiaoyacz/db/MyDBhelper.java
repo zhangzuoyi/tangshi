@@ -32,6 +32,13 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			+ Constants.DEGREE + " integer, "
 			+ Constants.EXPLAIN + " text, "
 			+ Constants.IMG + " text);";
+	private static final String CREATE_TABLE_QUESTION = "create table "
+			+ Constants.TABLE_QUESTIONS + " (" 
+			+ Constants.KEY_ID + " integer primary key autoincrement, " 
+			+ Constants.QUESTION + " text not null, " 
+			+ Constants.TYPE + " text not null, "
+			+ Constants.OPTIONS + " text, "
+			+ Constants.ANSWER + " text not null);";
 
 	public MyDBhelper(Context context, String name, CursorFactory factory,
 			int version) {
@@ -81,6 +88,9 @@ public class MyDBhelper extends SQLiteOpenHelper {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+	private void createQuestionTableAndInsertData(SQLiteDatabase db){
+		db.execSQL(CREATE_TABLE_QUESTION);
 	}
 
 	@Override

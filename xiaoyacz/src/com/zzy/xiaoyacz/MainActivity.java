@@ -43,11 +43,11 @@ public class MainActivity extends Activity {
 		db=new MyDB(this);
 		listView=(ListView) findViewById(R.id.listView1);
 //		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"JAVA","PYTHON","C"});
-		int[] imgs=new int[]{R.drawable.car_cadillac,R.drawable.car_chery,R.drawable.car_chevrolet};
+//		int[] imgs=new int[]{R.drawable.car_cadillac,R.drawable.car_chery,R.drawable.car_chevrolet};
 		db.open();
 		tangShiList=db.tangShiList();
 		db.close();
-		listView.setAdapter(new MyCustomAdapter(tangShiList,imgs));
+		listView.setAdapter(new MyCustomAdapter(tangShiList));
 		listView.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
@@ -119,12 +119,12 @@ public class MainActivity extends Activity {
 
 	class MyCustomAdapter extends ArrayAdapter<TangShi>{
 		List<TangShi> data;
-		int[] imgs;
+//		int[] imgs;
 
-		public MyCustomAdapter(List<TangShi> data,int[] imgs) {
+		public MyCustomAdapter(List<TangShi> data) {
 			super(MainActivity.this, R.layout.list_item, data);
 			this.data=data;
-			this.imgs=imgs;
+//			this.imgs=imgs;
 		}
 
 		@Override
@@ -144,7 +144,7 @@ public class MainActivity extends Activity {
 			TangShi ts=data.get(position);
 			vh.textView1.setText(ts.getTitle());
 			vh.textView2.setText(ts.getAuthor());
-			vh.imageView.setImageResource(imgs[0]);
+			vh.imageView.setImageResource(R.drawable.align_left_icon);
 			return convertView;
 		}
 	}

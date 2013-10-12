@@ -37,8 +37,19 @@ public class MyDB {
 	}
 
 	public List<TangShi> tangShiList() {
-		List<TangShi> list=new ArrayList<TangShi>();
 		Cursor c = db.query(Constants.TABLE_NAME, null, null, null, null, null,null);
+		return cursorToTangshi(c);
+	}
+	
+	public List<TangShi> findTangshi(String condition){
+		String sql="select * from "+Constants.TABLE_NAME+" where "+Constants.AUTHOR+" like '%"+condition+"%' ";
+		sql=sql+"or "+Constants.TITLE+" like '%"+condition+"%' ";
+		sql=sql+"or "+Constants.CONTENT+" like '%"+condition+"%' ";
+		Cursor cur=db.rawQuery(sql, null);
+		return cursorToTangshi(cur);
+	}
+	private List<TangShi> cursorToTangshi(Cursor c){
+		List<TangShi> list=new ArrayList<TangShi>();
 		if(c.moveToFirst()){
 			do{
 				TangShi ts=new TangShi();

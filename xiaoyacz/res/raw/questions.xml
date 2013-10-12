@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<textQuestions>
+	<textQuestion>
+	    <question>杜甫的《春夜喜雨》中“晓看红湿处”的下句是（ ）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>花重绵阳城</A>
+	        <B>花重锦州城</B>
+	        <C>花重锦官城</C>
+	        <D>花重成都城</D>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“海内存知己，天涯若比邻”是（ ）的诗句。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>王勃</A>
+	        <B>李白</B>
+	        <C>白居易</C>
+	        <D>王维</D>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
+</textQuestions>
