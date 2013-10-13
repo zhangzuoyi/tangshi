@@ -35,6 +35,16 @@ public class MyDB {
 			db = dbhelper.getReadableDatabase();
 		}
 	}
+	
+	public List<TangShi> findTangshiByAuthor(String author){
+		Cursor c = db.query(Constants.TABLE_NAME, null,Constants.AUTHOR+ "=?", new String[]{author}, null, null,null);
+		return cursorToTangshi(c);
+	}
+	
+	public List<TangShi> findTangshiByType(String type){
+		Cursor c = db.query(Constants.TABLE_NAME, null,Constants.TYPE+ "=?", new String[]{type}, null, null,null);
+		return cursorToTangshi(c);
+	}
 
 	public List<TangShi> tangShiList() {
 		Cursor c = db.query(Constants.TABLE_NAME, null, null, null, null, null,null);
@@ -61,6 +71,7 @@ public class MyDB {
 				ts.setId(c.getLong(c.getColumnIndex(Constants.KEY_ID)));
 //				ts.setImg(img);
 				ts.setTitle(c.getString(c.getColumnIndex(Constants.TITLE)));
+				ts.setType(c.getString(c.getColumnIndex(Constants.TYPE)));
 				list.add(ts);
 			}while(c.moveToNext());
 		}

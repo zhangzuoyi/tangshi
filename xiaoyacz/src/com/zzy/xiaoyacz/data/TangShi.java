@@ -11,6 +11,7 @@ public class TangShi implements Serializable{
 	private int img;
 	private String audio;
 	private int degree;//难度
+	private String type;
 	public String getTitle() {
 		return title;
 	}
@@ -58,6 +59,12 @@ public class TangShi implements Serializable{
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

@@ -31,6 +31,7 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			+ Constants.AUTHOR + " text not null, "
 			+ Constants.DEGREE + " integer, "
 			+ Constants.EXPLAIN + " text, "
+			+ Constants.TYPE + " text, "
 			+ Constants.IMG + " text);";
 	private static final String CREATE_TABLE_QUESTION = "create table "
 			+ Constants.TABLE_QUESTIONS + " (" 
@@ -82,6 +83,7 @@ public class MyDBhelper extends SQLiteOpenHelper {
 				cv.put(Constants.IMG, obj.getString("img"));
 				cv.put(Constants.DEGREE, obj.getInt("degree"));
 				cv.put(Constants.TITLE, obj.getString("title"));
+				cv.put(Constants.TYPE, obj.getString("type"));
 				db.insert(Constants.TABLE_NAME, null, cv);
 			}
 			

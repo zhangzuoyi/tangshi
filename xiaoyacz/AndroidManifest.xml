@@ -37,6 +37,10 @@
             android:name="com.zzy.xiaoyacz.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="com.zzy.xiaoyacz.ListByCategory"
+            android:label="@string/view_by_category" >
+        </activity>
     </application>
 
 </manifest>
