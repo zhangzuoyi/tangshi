@@ -9,6 +9,7 @@
     <string name="list">列表</string>
     <string name="by_type">按分类</string>
     <string name="by_author">按持人</string>
+    <string name="test">测试</string>
     <string name="search">查询</string>
     <string name="search_hint">标题，作者或内容</string>
     <string name="view_by_category">分类查看</string>

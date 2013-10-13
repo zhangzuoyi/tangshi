@@ -19,6 +19,7 @@ public class TabFragment extends Fragment {
 	private static final int LIST_STATE = 0x1;
     private static final int TYPE_STATE = 0x2;
     private static final int AUTHOR_STATE = 0x3;
+    private static final int TEST_STATE = 0x4;
     
     private int mTabState;
     
@@ -32,6 +33,7 @@ public class TabFragment extends Fragment {
         final TextView listButton = (TextView) view.findViewById(R.id.listButton);
         final TextView typeButton = (TextView) view.findViewById(R.id.byTypeButton);
         final TextView authorButton = (TextView) view.findViewById(R.id.byAuthorButton);
+        final TextView testButton = (TextView) view.findViewById(R.id.testButton);
 //        Button listButton = (Button) view.findViewById(R.id.listButton);
 //        Button typeButton = (Button) view.findViewById(R.id.byTypeButton);
 //        Button authorButton = (Button) view.findViewById(R.id.byAuthorButton);
@@ -63,6 +65,13 @@ public class TabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gotoAuthorView();
+            }
+        });
+        
+        testButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoTestView();
             }
         });
         
@@ -121,6 +130,22 @@ public class TabFragment extends Fragment {
             if (fm != null) {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment_content, new ByAuthorFragment());
+                ft.commit();
+            }
+        }
+    }
+    public void gotoTestView() {
+        // See gotoListView(). This method does the same thing except it loads
+        // the grid tab.
+        
+        if (mTabState !=TEST_STATE) {
+            mTabState = TEST_STATE;
+            
+            FragmentManager fm = getFragmentManager();
+            
+            if (fm != null) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_content, new TestFragment());
                 ft.commit();
             }
         }
