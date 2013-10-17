@@ -10,11 +10,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"></LinearLayout>
+    <RadioGroup android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+    </RadioGroup>
     <RelativeLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <Button android:id="@+id/operation_button"
             android:layout_alignParentRight="true"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
         
