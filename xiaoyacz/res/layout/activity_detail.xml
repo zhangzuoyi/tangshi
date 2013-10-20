@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".DetailActivity" >
 
     <TextView
@@ -11,11 +10,13 @@
         style="@style/TitleStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:text="@string/hello_world" />
     <TextView
-        android:id="@+id/auther"
+        android:id="@+id/author"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/title"
         android:textStyle="italic"
         android:gravity="center"
         android:layout_marginTop="5dip"
@@ -24,6 +25,7 @@
         android:id="@+id/content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/author"
          android:gravity="center"
         android:textSize="20sp"
         android:layout_marginTop="5dip"
@@ -33,17 +35,19 @@
         android:id="@+id/explain"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/content"
         android:layout_margin="5dip"
         android:text="@string/hello_world" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_alignParentBottom="true">
         <ImageButton
 	        android:id="@+id/button1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
+	        android:layout_centerInParent="true"
 	        android:src="@android:drawable/ic_media_play" />
         <!-- <ImageButton
 	        android:id="@+id/button2"
@@ -54,4 +58,4 @@
 	        android:src="@drawable/player_record" /> -->
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <RelativeLayout 
+    <!-- <RelativeLayout 
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
@@ -19,10 +19,11 @@
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:text="@string/search"/>
-    </RelativeLayout>
-    <ListView android:layout_above="@+id/footer"
+    </RelativeLayout> -->
+    <ListView 
         android:id="@android:id/list"
         android:layout_width="fill_parent"
-    android:layout_height="fill_parent" ></ListView>
+        android:layout_height="fill_parent" 
+        android:layout_centerInParent="true"></ListView>
 
 </RelativeLayout>

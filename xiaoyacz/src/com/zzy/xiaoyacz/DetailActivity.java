@@ -14,6 +14,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -22,6 +23,8 @@ import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -57,7 +60,7 @@ public class DetailActivity extends Activity {
 		Bundle bundle=getIntent().getExtras();
 		ts=(TangShi) bundle.getSerializable("ts");
 		TextView title=(TextView) findViewById(R.id.title);
-		TextView author=(TextView) findViewById(R.id.auther);
+		TextView author=(TextView) findViewById(R.id.author);
 		TextView content=(TextView) findViewById(R.id.content);
 		TextView explain=(TextView) findViewById(R.id.explain);
 		title.setText(ts.getTitle());
@@ -211,13 +214,26 @@ public class DetailActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+			NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
+
+			ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+			if(!wifiNetworkInfo.isConnected()){
+				m_mediaPlayer=null;
+				Toast.makeText(DetailActivity.this, "网络不给力，不能朗读", Toast.LENGTH_SHORT).show();
+			}else{
+				m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+			}
 //			m_mediaPlayer=new MediaPlayer();
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
+			if(m_mediaPlayer==null)
+				return;
+			
 			m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
 
 				@Override
