@@ -13,5 +13,8 @@
     <string name="search">查询</string>
     <string name="search_hint">标题，作者或内容</string>
     <string name="view_by_category">分类查看</string>
+    <string name="no_network_no_recite">网络不给力，不能朗读</string>
+    <string name="next_question">下一题</string>
+    <string name="restart">重新开始</string>
 
 </resources>

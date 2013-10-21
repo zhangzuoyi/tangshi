@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -221,7 +222,10 @@ public class DetailActivity extends Activity {
 			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 			if(!wifiNetworkInfo.isConnected()){
 				m_mediaPlayer=null;
-				Toast.makeText(DetailActivity.this, "网络不给力，不能朗读", Toast.LENGTH_SHORT).show();
+				String msg=getResources().getString(R.string.no_network_no_recite);
+				Looper.prepare();
+				Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+				Looper.loop();
 			}else{
 				m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
 			}

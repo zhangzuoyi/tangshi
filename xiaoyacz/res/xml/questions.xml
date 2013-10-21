@@ -22,4 +22,15 @@
 	    </options>
 	    <answer>A</answer>
 	</textQuestion>
+	<textQuestion>
+	    <question>“停车坐爱枫林晚，霜叶红于二月花”中“坐”的意思是（）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>因为</A>
+	        <B>坐下</B>
+	        <C>座位</C>
+	        <D>喜欢</D>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
 </textQuestions>

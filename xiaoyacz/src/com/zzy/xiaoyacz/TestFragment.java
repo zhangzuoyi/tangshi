@@ -8,12 +8,14 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,30 +26,70 @@ import com.zzy.xiaoyacz.data.TestQuestion;
 
 public class TestFragment extends Fragment{
 	List<TestQuestion> questions;
+	int currentQuestionIndex;
+	TextView titleView;
+	RadioGroup radioGroup;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		loadQuestions();
-		TestQuestion question=questions.get(0);
+		currentQuestionIndex=0;
 		View view = inflater.inflate(R.layout.test, container, false);
-		TextView titleView=(TextView) view.findViewById(R.id.title);
-		titleView.setText(question.getQuestion());
-		LinearLayout contentLayout=(LinearLayout) view.findViewById(R.id.content_layout);
-		RadioGroup radioGroup=(RadioGroup) view.findViewById(R.id.radioGroup);
+		titleView=(TextView) view.findViewById(R.id.title);
+//		LinearLayout contentLayout=(LinearLayout) view.findViewById(R.id.content_layout);
+		radioGroup=(RadioGroup) view.findViewById(R.id.radioGroup);
+		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				TestQuestion question=questions.get(currentQuestionIndex);
+				RadioButton checkedRb=(RadioButton) group.findViewById(checkedId);
+				int num=group.getChildCount();
+				for(int i=0;i<num;i++){
+					RadioButton rb=(RadioButton) group.getChildAt(i);
+					if(rb.getTag().equals(question.getAnswer())){
+						rb.setButtonDrawable(R.drawable.btn_check_buttonless_on);
+					}
+				}
+				if(!checkedRb.getTag().equals(question.getAnswer())){
+					checkedRb.setButtonDrawable(R.drawable.ic_delete);
+				}
+			}
+		});
+		final Button opeButton=(Button) view.findViewById(R.id.operation_button);
+		opeButton.setText(R.string.next_question);
+		opeButton.setOnClickListener(new View.OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				currentQuestionIndex++;
+				if(currentQuestionIndex>=questions.size()){
+					currentQuestionIndex=0;
+				}
+				if(currentQuestionIndex==questions.size()-1){
+					opeButton.setText(R.string.restart);
+				}else{
+					opeButton.setText(R.string.next_question);
+				}
+				updateUI();
+			}
+			
+		});
+		updateUI();
+		return view;
+	}
+	private void updateUI(){
+		TestQuestion question=questions.get(currentQuestionIndex);
+		titleView.setText((currentQuestionIndex+1)+"."+question.getQuestion());
+		radioGroup.removeAllViews();
 		for(SelectItem item:question.getOptions()){
-//			View itemView=inflater.inflate(R.layout.test_option, container, false);
-//			TextView tv=(TextView) itemView.findViewById(R.id.optionText);
-//			tv.setText(item.getTag()+". "+item.getText());
-//			RadioButton rb=(RadioButton) itemView.findViewById(R.id.selectRradio);
-//			contentLayout.addView(itemView);
 			RadioButton rb=new RadioButton(getActivity());
 			rb.setText(item.getTag()+". "+item.getText());
+			rb.setTag(item.getTag());
 			radioGroup.addView(rb);
 		}
-		Button opeButton=(Button) view.findViewById(R.id.operation_button);
-		opeButton.setText("Next");
-		return view;
+		
 	}
 	private void loadQuestions(){
 		questions=new ArrayList<TestQuestion>();
