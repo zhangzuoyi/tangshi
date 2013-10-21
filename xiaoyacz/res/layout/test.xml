@@ -24,7 +24,8 @@
         <Button android:id="@+id/operation_button"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+            android:textSize="14sp"/>
     </RelativeLayout>
         
 </LinearLayout>

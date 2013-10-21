@@ -36,7 +36,11 @@
         </activity>
         <activity
             android:name="com.zzy.xiaoyacz.DetailActivity"
-            android:label="@string/title_activity_detail" >
+            android:label="@string/title_activity_detail" 
+            android:parentActivityName="com.zzy.xiaoyacz.NewFragmentTabs">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.zzy.xiaoyacz.NewFragmentTabs" />
         </activity>
         <activity
             android:name="com.zzy.xiaoyacz.SettingsActivity"

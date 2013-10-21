@@ -12,6 +12,7 @@ public class Constants {
 	public static final String AUDIO="audio";
 	public static final String DEGREE="degree";
 	public static final String KEY_ID="_id";
+	public static final String COLLECT="collect";
 	
 	public static final String TABLE_QUESTIONS="test_question";
 	public static final String QUESTION="question";

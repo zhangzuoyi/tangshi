@@ -16,5 +16,8 @@
     <string name="no_network_no_recite">网络不给力，不能朗读</string>
     <string name="next_question">下一题</string>
     <string name="restart">重新开始</string>
+    <string name="collect">收藏</string>
+    <string name="collect_success">收藏成功</string>
+    <string name="cancel_collect_success">取消收藏成功</string>
 
 </resources>

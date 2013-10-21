@@ -12,6 +12,7 @@ public class TangShi implements Serializable{
 	private String audio;
 	private int degree;//难度
 	private String type;
+	private int collectStatus;//收藏状态，0未收藏，1已收藏
 	public String getTitle() {
 		return title;
 	}
@@ -65,6 +66,12 @@ public class TangShi implements Serializable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public int getCollectStatus() {
+		return collectStatus;
+	}
+	public void setCollectStatus(int collectStatus) {
+		this.collectStatus = collectStatus;
 	}
 	
 }

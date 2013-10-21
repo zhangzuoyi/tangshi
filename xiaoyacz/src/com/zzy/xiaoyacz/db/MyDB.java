@@ -36,6 +36,21 @@ public class MyDB {
 		}
 	}
 	
+	public void collect(long id){
+		String sql="update "+Constants.TABLE_NAME+" set "+Constants.COLLECT+"= 1 where "+Constants.KEY_ID+" =?";
+		db.execSQL(sql, new Object[]{id});
+	}
+	
+	public void cancelCollect(long id){
+		String sql="update "+Constants.TABLE_NAME+" set "+Constants.COLLECT+"= 0 where "+Constants.KEY_ID+" =?";
+		db.execSQL(sql, new Object[]{id});
+	}
+	
+	public List<TangShi> findTangshiCollected(){
+		Cursor c = db.query(Constants.TABLE_NAME, null,Constants.COLLECT+ "=?", new String[]{"1"}, null, null,null);
+		return cursorToTangshi(c);
+	}
+	
 	public List<TangShi> findTangshiByAuthor(String author){
 		Cursor c = db.query(Constants.TABLE_NAME, null,Constants.AUTHOR+ "=?", new String[]{author}, null, null,null);
 		return cursorToTangshi(c);
@@ -72,6 +87,7 @@ public class MyDB {
 //				ts.setImg(img);
 				ts.setTitle(c.getString(c.getColumnIndex(Constants.TITLE)));
 				ts.setType(c.getString(c.getColumnIndex(Constants.TYPE)));
+				ts.setCollectStatus(c.getInt(c.getColumnIndex(Constants.COLLECT)));
 				list.add(ts);
 			}while(c.moveToNext());
 		}

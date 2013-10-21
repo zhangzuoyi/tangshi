@@ -30,6 +30,7 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			+ Constants.AUDIO + " text, "
 			+ Constants.AUTHOR + " text not null, "
 			+ Constants.DEGREE + " integer, "
+			+ Constants.COLLECT + " integer, "
 			+ Constants.EXPLAIN + " text, "
 			+ Constants.TYPE + " text, "
 			+ Constants.IMG + " text);";
@@ -84,6 +85,7 @@ public class MyDBhelper extends SQLiteOpenHelper {
 				cv.put(Constants.DEGREE, obj.getInt("degree"));
 				cv.put(Constants.TITLE, obj.getString("title"));
 				cv.put(Constants.TYPE, obj.getString("type"));
+				cv.put(Constants.COLLECT, 0);
 				db.insert(Constants.TABLE_NAME, null, cv);
 			}
 			

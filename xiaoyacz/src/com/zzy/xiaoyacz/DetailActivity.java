@@ -36,6 +36,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -43,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zzy.xiaoyacz.data.TangShi;
+import com.zzy.xiaoyacz.db.MyDB;
 import com.zzy.xiaoyacz.util.FileUtil;
 
 public class DetailActivity extends Activity {
@@ -53,11 +55,13 @@ public class DetailActivity extends Activity {
 	String aliyunUrl="http://oss.aliyuncs.com/object_test/tangshi/";
 	boolean isPrepare=false;//音频文件是否已经设置好
 	Handler handler;
+	MyDB db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+		db=new MyDB(this);
 		Bundle bundle=getIntent().getExtras();
 		ts=(TangShi) bundle.getSerializable("ts");
 		TextView title=(TextView) findViewById(R.id.title);
@@ -76,6 +80,7 @@ public class DetailActivity extends Activity {
 			new MediaPlayerTask().execute();
 			
 		}
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	private void setRecordButton(){
 		/*recordButton=(ImageButton) findViewById(R.id.button2);
@@ -208,8 +213,37 @@ public class DetailActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_detail, menu);
+		setMenuItemIcon(menu.findItem(R.id.collect));
 		return true;
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId()==R.id.collect){
+			item.setIcon(android.R.drawable.btn_star_big_off);
+			db.open();
+			if(ts.getCollectStatus()==1){
+				db.cancelCollect(ts.getId());
+				ts.setCollectStatus(0);
+				Toast.makeText(this, getResources().getString(R.string.cancel_collect_success), Toast.LENGTH_SHORT).show();
+			}else{
+				db.collect(ts.getId());
+				ts.setCollectStatus(1);
+				Toast.makeText(this, getResources().getString(R.string.collect_success), Toast.LENGTH_SHORT).show();
+			}
+			db.close();
+			setMenuItemIcon(item);
+		}
+		return true;
+	}
+	private void setMenuItemIcon(MenuItem item){
+		if(ts.getCollectStatus()==1){
+			item.setIcon(android.R.drawable.btn_star_big_on);
+		}else{
+			item.setIcon(android.R.drawable.btn_star_big_off);
+		}
+	}
+
 
 	private class MediaPlayerTask extends AsyncTask<Void,Void,Void>{
 
