@@ -30,7 +30,6 @@ public class ByTypeFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
 				String type=types[position];
-				Toast.makeText(getActivity(), type, Toast.LENGTH_SHORT).show();
 				Intent i=new Intent(getActivity(),ListByCategory.class);
 				i.putExtra("type", "type");
 				i.putExtra("param", type);

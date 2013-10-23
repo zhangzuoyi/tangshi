@@ -5,5 +5,10 @@
         android:key="audio_download"
         android:summary="@string/pref_download_audio"
         android:title="@string/pref_download_audio" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="onlyuse_wifi"
+        android:summary="@string/onlyuse_wifi_download"
+        android:title="@string/onlyuse_wifi_download" />
 
 </PreferenceScreen>
