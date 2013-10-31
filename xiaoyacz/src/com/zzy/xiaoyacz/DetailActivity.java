@@ -56,6 +56,7 @@ public class DetailActivity extends Activity {
 	boolean isPrepare=false;//音频文件是否已经设置好
 	Handler handler;
 	MyDB db;
+	boolean onlyWifi;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,9 @@ public class DetailActivity extends Activity {
 		playPauseButton=(ImageButton) findViewById(R.id.button1);
 		playPauseButton.setEnabled(false);
 		playPauseButton.setVisibility(View.INVISIBLE);
+//		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(DetailActivity.this);
+//		boolean download = settings.getBoolean("audio_download", false);
+//		onlyWifi = settings.getBoolean("onlyuse_wifi", false);
 		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){
 			new MediaPlayerTask().execute();
 			
@@ -254,16 +258,17 @@ public class DetailActivity extends Activity {
 			ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-			if(!wifiNetworkInfo.isConnected()){
+			//||(!onlyWifi&&mobileNetworkInfo.isConnected())
+			if(wifiNetworkInfo.isConnected()){
+				m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+				Log.i("network", "connected");
+			}else{
 				m_mediaPlayer=null;
 				String msg=getResources().getString(R.string.no_network_no_recite);
 				Looper.prepare();
 				Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_SHORT).show();
 				Looper.loop();
-			}else{
-				m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
 			}
-//			m_mediaPlayer=new MediaPlayer();
 			return null;
 		}
 
