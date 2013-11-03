@@ -2,10 +2,6 @@ package com.zzy.xiaoyacz;
 
 import java.util.List;
 
-import com.zzy.xiaoyacz.data.TangShi;
-import com.zzy.xiaoyacz.db.MyDB;
-
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +9,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-public class ListByCategory extends ListActivity {
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.zzy.xiaoyacz.data.TangShi;
+import com.zzy.xiaoyacz.db.MyDB;
+
+public class ListByCategory extends SherlockListActivity {
 	MyDB db;
 	List<TangShi> tangShiList;
 	@Override

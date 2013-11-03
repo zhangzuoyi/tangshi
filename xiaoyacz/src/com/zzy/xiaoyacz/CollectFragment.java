@@ -2,17 +2,17 @@ package com.zzy.xiaoyacz;
 
 import java.util.List;
 
-import com.zzy.xiaoyacz.data.TangShi;
-import com.zzy.xiaoyacz.db.MyDB;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CollectFragment extends ListFragment {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.zzy.xiaoyacz.data.TangShi;
+import com.zzy.xiaoyacz.db.MyDB;
+
+public class CollectFragment extends SherlockListFragment {
 	List<TangShi> tangShiList;
 	MyDB db;
 	public void onActivityCreated(Bundle savedInstanceState) {

@@ -1,21 +1,17 @@
 package com.zzy.xiaoyacz;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TabFragment extends Fragment {
+import com.actionbarsherlock.app.SherlockFragment;
+
+public class TabFragment extends SherlockFragment {
 	private static final int LIST_STATE = 0x1;
     private static final int TYPE_STATE = 0x2;
     private static final int AUTHOR_STATE = 0x3;

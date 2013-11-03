@@ -12,44 +12,35 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioRecord;
-import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaRecorder;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 import com.zzy.xiaoyacz.util.FileUtil;
 
-public class DetailActivity extends Activity {
+public class DetailActivity extends SherlockActivity {
 	TangShi ts;
 	ImageButton playPauseButton;
+	SeekBar seekbar;
 //	ImageButton recordButton;
 	MediaPlayer m_mediaPlayer;
 	String aliyunUrl="http://oss.aliyuncs.com/object_test/tangshi/";
@@ -75,14 +66,16 @@ public class DetailActivity extends Activity {
 		explain.setText(ts.getExplain());
 		
 		playPauseButton=(ImageButton) findViewById(R.id.button1);
-		playPauseButton.setEnabled(false);
-		playPauseButton.setVisibility(View.INVISIBLE);
+		seekbar=(SeekBar) findViewById(R.id.seek_bar);
 //		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(DetailActivity.this);
 //		boolean download = settings.getBoolean("audio_download", false);
 //		onlyWifi = settings.getBoolean("onlyuse_wifi", false);
 		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){
 			new MediaPlayerTask().execute();
 			
+		}else{
+			seekbar.setVisibility(View.INVISIBLE);
+			playPauseButton.setVisibility(View.INVISIBLE);
 		}
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
@@ -188,11 +181,22 @@ public class DetailActivity extends Activity {
 	void pauseMP() {
 		playPauseButton.setImageResource(android.R.drawable.ic_media_play);
 		m_mediaPlayer.pause();
+		handler2.removeCallbacks(updateThread);
 	}
 	void startMP() {
 		m_mediaPlayer.start();
 		playPauseButton.setImageResource(android.R.drawable.ic_media_pause);
+		handler2.post(updateThread);
 	}
+	Handler handler2 = new Handler();  
+    Runnable updateThread = new Runnable(){  
+        public void run() {  
+            //获得歌曲现在播放位置并设置成播放进度条的值  
+        	seekbar.setProgress(m_mediaPlayer.getCurrentPosition());  
+            //每次延迟100毫秒再启动线程  
+            handler2.postDelayed(updateThread, 100);  
+        }  
+    };  
 
 	boolean needToResume = false;
 	@Override
@@ -216,7 +220,7 @@ public class DetailActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_detail, menu);
+		getSupportMenuInflater().inflate(R.menu.activity_detail, menu);
 		setMenuItemIcon(menu.findItem(R.id.collect));
 		return true;
 	}
@@ -255,7 +259,8 @@ public class DetailActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
 
-			ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+			m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+			/*ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 			//||(!onlyWifi&&mobileNetworkInfo.isConnected())
@@ -268,7 +273,7 @@ public class DetailActivity extends Activity {
 				Looper.prepare();
 				Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_SHORT).show();
 				Looper.loop();
-			}
+			}*/
 			return null;
 		}
 
@@ -282,6 +287,8 @@ public class DetailActivity extends Activity {
 				@Override
 				public void onCompletion(MediaPlayer arg0) {
 					playPauseButton.setImageResource(android.R.drawable.ic_media_play);
+					handler2.removeCallbacks(updateThread);
+					seekbar.setProgress(0);
 				}
 				
 			});
@@ -302,8 +309,25 @@ public class DetailActivity extends Activity {
 					}
 				}
 			});
-			playPauseButton.setEnabled(true);
-			playPauseButton.setVisibility(View.VISIBLE);
+			seekbar.setMax(m_mediaPlayer.getDuration());
+			seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
+	            @Override  
+	            public void onProgressChanged(SeekBar seekBar, int progress,  
+	                    boolean fromUser) {  
+	                // fromUser判断是用户改变的滑块的值  
+	                if(fromUser==true){  
+	                	m_mediaPlayer.seekTo(progress);  
+	                }  
+	            }  
+	            @Override  
+	            public void onStartTrackingTouch(SeekBar seekBar) {  
+	                // TODO Auto-generated method stub  
+	            }  
+	            @Override  
+	            public void onStopTrackingTouch(SeekBar seekBar) {  
+	                // TODO Auto-generated method stub        
+	            }  
+	        });
 		}
 		
 		

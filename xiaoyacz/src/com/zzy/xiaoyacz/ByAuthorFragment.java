@@ -4,17 +4,15 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import com.zzy.xiaoyacz.data.TangShi;
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.zzy.xiaoyacz.db.MyDB;
 
-public class ByAuthorFragment extends ListFragment {
+public class ByAuthorFragment extends SherlockListFragment {
 	MyDB db;
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
