@@ -3,10 +3,68 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
+    <!-- <ListView
         android:id="@+id/typeList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </ListView>
+    </ListView> -->
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/type1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="五言绝句"/>
+        <Button android:id="@+id/type2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="七言绝句"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/type3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="五言律诗"/>
+        <Button android:id="@+id/type4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="七言律诗"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/type5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="五言古诗"/>
+        <Button android:id="@+id/type6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="七言古诗"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/type7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dip"
+            android:text="乐府"/>
+    </LinearLayout>
 
 </LinearLayout>

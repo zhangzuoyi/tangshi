@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.zzy.xiaoyacz.R;
+import com.zzy.xiaoyacz.data.Author;
 import com.zzy.xiaoyacz.data.TangShi;
 
 public class MyDB {
@@ -93,17 +93,30 @@ public class MyDB {
 		}
 		return list;
 	}
-	
-	public List<String> authorList(){
-		Cursor cur=db.rawQuery("select distinct "+Constants.AUTHOR+" from "+Constants.TABLE_NAME, null);
-		List<String> result=new ArrayList<String>();
-		if(cur.moveToFirst()){
+	public List<Author> authorList() {
+		Cursor c = db.query(Author.TABLE, null, null, null, null, null,null);
+		List<Author> list=new ArrayList<Author>();
+		if(c.moveToFirst()){
 			do{
-				result.add(cur.getString(0));
-			}while(cur.moveToNext());
+				Author ts=new Author();
+				ts.setName(c.getString(c.getColumnIndex(Author.NAME)));
+				ts.setInitial(c.getString(c.getColumnIndex(Author.INITIAL)));
+				list.add(ts);
+			}while(c.moveToNext());
 		}
-		return result;
+		return list;
 	}
+	
+//	public List<String> authorList(){
+//		Cursor cur=db.rawQuery("select distinct "+Constants.AUTHOR+" from "+Constants.TABLE_NAME, null);
+//		List<String> result=new ArrayList<String>();
+//		if(cur.moveToFirst()){
+//			do{
+//				result.add(cur.getString(0));
+//			}while(cur.moveToNext());
+//		}
+//		return result;
+//	}
 
 	public Cursor getdiaries() {
 		Cursor c = db.query(Constants.TABLE_NAME, null, null, null, null, null,

@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.zzy.xiaoyacz.R;
+import com.zzy.xiaoyacz.data.Author;
 
 public class MyDBhelper extends SQLiteOpenHelper {
 	Context context;
@@ -41,6 +42,13 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			+ Constants.TYPE + " text not null, "
 			+ Constants.OPTIONS + " text, "
 			+ Constants.ANSWER + " text not null);";
+	private static final String CREATE_TABLE_AUTHOR = "create table "
+			+ Author.TABLE + " (" 
+			+ Author.ID + " integer primary key autoincrement, " 
+			+ Author.INITIAL + " text not null, " 
+			+ Author.INTRO + " text, "
+			+ Author.NAME + " text not null, "
+			+ Author.STAGE + " text );";
 
 	public MyDBhelper(Context context, String name, CursorFactory factory,
 			int version) {
@@ -54,6 +62,7 @@ public class MyDBhelper extends SQLiteOpenHelper {
 		try {
 			db.execSQL(CREATE_TABLE);
 			insertTangShis(db);
+			createAuthorTableAndInsertData(db);
 		} catch (SQLiteException ex) {
 			Log.v("Create table exception", ex.getMessage());
 		}
@@ -77,14 +86,22 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			for(int i=0;i<arr.length();i++){
 				JSONObject obj=arr.getJSONObject(i);
 				ContentValues cv = new ContentValues();
-				cv.put(Constants.AUDIO, obj.getString("audio"));
-				cv.put(Constants.AUTHOR, obj.getString("author"));
-				cv.put(Constants.CONTENT, obj.getString("content"));
-				cv.put(Constants.EXPLAIN, obj.getString("explain"));
-				cv.put(Constants.IMG, obj.getString("img"));
-				cv.put(Constants.DEGREE, obj.getInt("degree"));
-				cv.put(Constants.TITLE, obj.getString("title"));
-				cv.put(Constants.TYPE, obj.getString("type"));
+				if(obj.has("audio"))
+					cv.put(Constants.AUDIO, obj.getString("audio"));
+				if(obj.has("author"))
+					cv.put(Constants.AUTHOR, obj.getString("author"));
+				if(obj.has("content"))
+					cv.put(Constants.CONTENT, obj.getString("content"));
+				if(obj.has("explain"))
+					cv.put(Constants.EXPLAIN, obj.getString("explain"));
+				if(obj.has("img"))
+					cv.put(Constants.IMG, obj.getString("img"));
+				if(obj.has("degree"))
+					cv.put(Constants.DEGREE, obj.getInt("degree"));
+				if(obj.has("title"))
+					cv.put(Constants.TITLE, obj.getString("title"));
+				if(obj.has("type"))
+					cv.put(Constants.TYPE, obj.getString("type"));
 				cv.put(Constants.COLLECT, 0);
 				db.insert(Constants.TABLE_NAME, null, cv);
 			}
@@ -93,8 +110,41 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			e.printStackTrace();
 		}
 	}
-	private void createQuestionTableAndInsertData(SQLiteDatabase db){
-		db.execSQL(CREATE_TABLE_QUESTION);
+//	private void createQuestionTableAndInsertData(SQLiteDatabase db){
+//		db.execSQL(CREATE_TABLE_QUESTION);
+//	}
+	private void createAuthorTableAndInsertData(SQLiteDatabase db){
+		db.execSQL(CREATE_TABLE_AUTHOR);
+		insertAuthors(db);
+	}
+	private void insertAuthors(SQLiteDatabase db){
+		StringBuilder sb=new StringBuilder();
+		BufferedReader br=new BufferedReader(new InputStreamReader(context.getResources().openRawResource(R.raw.authors)));
+		try {
+			String str=br.readLine();
+			while(str!=null){
+				sb.append(str);
+				str=br.readLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Log.i("JSON file", sb.toString());
+		try {
+			JSONArray arr=new JSONArray(sb.toString());
+			for(int i=0;i<arr.length();i++){
+				JSONObject obj=arr.getJSONObject(i);
+				ContentValues cv = new ContentValues();
+				if(obj.has("name"))
+					cv.put(Author.NAME, obj.getString("name"));
+				if(obj.has("initial"))
+					cv.put(Author.INITIAL, obj.getString("initial"));
+				db.insert(Author.TABLE, null, cv);
+			}
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
