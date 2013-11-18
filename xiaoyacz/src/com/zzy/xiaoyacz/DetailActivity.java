@@ -63,7 +63,7 @@ public class DetailActivity extends SherlockActivity {
 		title.setText(ts.getTitle());
 		author.setText(ts.getAuthor());
 		content.setText(Html.fromHtml(ts.getContent()));
-		explain.setText(ts.getExplain());
+		explain.setText(Html.fromHtml(ts.getExplain()));
 		
 		playPauseButton=(ImageButton) findViewById(R.id.button1);
 		seekbar=(SeekBar) findViewById(R.id.seek_bar);

@@ -33,4 +33,135 @@
 	    </options>
 	    <answer>A</answer>
 	</textQuestion>
+	<textQuestion>
+	    <question>杜牧的《江南春》中“南朝四百八十寺”的下句是（）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>多少楼台烟波中</A>
+	        <B>多少楼台风雨中</B>
+	        <C>多少楼台烟雨中</C>
+	        <D>多少楼房风雨中</D>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“独在异乡为异客，每逢佳节倍思亲”是( )的诗句。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>王维</A>
+	        <B>王之涣</B>
+	        <C>王勃</C>
+	        <D>王昌龄</D>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“野火烧不尽，春风吹又生”一句出自( )。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>白居易《赋得古原草送别》</A>
+	        <B>王昌龄《出塞》</B>
+	        <C>杜牧《江南春》</C>
+	        <D>王勃《送杜少府之任蜀州》</D>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“春蚕到死丝方尽，蜡炬成灰泪始干”出自( )的《无题》。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>李贺</A>
+	        <B>李清照</B>
+	        <C>李商隐</C>
+	        <D>李白</D>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“海上生明月，( )共此时”是张九龄的名句。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>天地</A>
+	        <B>天下</B>
+	        <C>天涯</C>
+	        <D>人间</D>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“莫愁前路无知己，天下谁人不识君”出自( )的《别董大》。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>高适</A>
+	        <B>岑参</B>
+	        <C>王昌龄</C>
+	        <D>杜甫</D>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“正是江南好风景，落花时节又逢君”中的“君”是指（）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>李延年</A>
+	        <B>李龟年</B>
+	        <C>崔九</C>
+	        <D>董大</D>
+	    </options>
+	    <answer>B</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“但使龙城飞将在，不教胡马度（ ）。”是王昌龄的诗句。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>阴山</A>
+	        <B>边关</B>
+	        <C>燕山</C>
+	        <D>华山</D>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“忽如一夜春风来，千树万树梨花开。”写的是（ ）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>春色 </A>
+	        <B>梨花</B>
+	        <C>雪景</C>
+	        <D>白发</D>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>“无边落木萧萧下，不尽长江天际流。“出自杜甫的（ ）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>《茅屋为秋风所破》</A>
+	        <B>《登高》</B>
+	        <C>《蜀相》</C>
+	        <D>《佳人》</D>
+	    </options>
+	    <answer>B</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>下面哪一组不是“初唐四杰”中的人物（  ）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>王昌龄、 王维</A>
+	        <B>骆宾王、 杨炯</B>
+	        <C>王勃、卢照邻</C>
+	    </options>
+	    <answer>A</answer>
+	</textQuestion>
+	<textQuestion>
+	    <question>分别号称“诗仙”、“诗圣”、“诗鬼”的诗人是（ ）。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>李贺、杜甫、李商隐</A>
+	        <B>李白、李贺、杜甫</B>
+	        <C>李白、杜甫、李贺</C>
+	        <D>李白、杜甫、白居易</D>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
 </textQuestions>

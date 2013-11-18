@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailActivity" >
-
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/bottom_bar">
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/title"
         style="@style/TitleStyle"
@@ -38,21 +42,29 @@
         android:layout_below="@id/content"
         android:layout_margin="5dip"
         android:text="@string/hello_world" />
-
+</RelativeLayout>
+</ScrollView>
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
+        android:id="@+id/bottom_bar"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:layout_alignParentBottom="true">
         <ImageButton
 	        android:id="@+id/button1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
+	        android:background="#ffffff"
+	        android:layout_marginLeft="10dp"
 	        android:src="@android:drawable/ic_media_play" />
         <SeekBar
 	        android:id="@+id/seek_bar"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
 	        android:layout_toRightOf="@id/button1" />
         <!-- <ImageButton
 	        android:id="@+id/button2"

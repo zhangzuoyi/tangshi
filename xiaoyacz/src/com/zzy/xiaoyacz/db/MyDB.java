@@ -94,7 +94,7 @@ public class MyDB {
 		return list;
 	}
 	public List<Author> authorList() {
-		Cursor c = db.query(Author.TABLE, null, null, null, null, null,null);
+		Cursor c = db.query(Author.TABLE, null, null, null, null, null,Author.NAME);
 		List<Author> list=new ArrayList<Author>();
 		if(c.moveToFirst()){
 			do{
