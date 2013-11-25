@@ -74,8 +74,8 @@ public class DetailActivity extends SherlockActivity {
 			new MediaPlayerTask().execute();
 			
 		}else{
-			seekbar.setVisibility(View.INVISIBLE);
-			playPauseButton.setVisibility(View.INVISIBLE);
+			seekbar.setVisibility(View.GONE);
+			playPauseButton.setVisibility(View.GONE);
 		}
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
