@@ -13,15 +13,13 @@ import android.widget.TextView;
 import com.zzy.xiaoyacz.data.TangShi;
 
 public class TangshiListAdapter  extends ArrayAdapter<TangShi>{
-	List<TangShi> data;
-	Context context;
-//	int[] imgs;
+	private List<TangShi> data;
+	private Context context;
 
 	public TangshiListAdapter(Context context,List<TangShi> data) {
 		super(context, R.layout.list_item, data);
 		this.context=context;
 		this.data=data;
-//		this.imgs=imgs;
 	}
 
 	@Override
@@ -44,7 +42,7 @@ public class TangshiListAdapter  extends ArrayAdapter<TangShi>{
 		vh.imageView.setImageResource(R.drawable.align_left_icon);
 		return convertView;
 	}
-	private class ViewHolder{
+	static class ViewHolder{
 		public ImageView imageView;
 		public TextView textView1;
 		public TextView textView2;

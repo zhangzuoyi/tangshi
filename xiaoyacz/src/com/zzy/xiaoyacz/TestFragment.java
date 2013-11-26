@@ -2,6 +2,7 @@ package com.zzy.xiaoyacz;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.zzy.xiaoyacz.data.SelectItem;
 import com.zzy.xiaoyacz.data.TestQuestion;
-
+//TODO 增加上一题按钮
 public class TestFragment extends SherlockFragment{
 	List<TestQuestion> questions;
 	int currentQuestionIndex;
@@ -34,7 +35,6 @@ public class TestFragment extends SherlockFragment{
 		currentQuestionIndex=0;
 		View view = inflater.inflate(R.layout.test, container, false);
 		titleView=(TextView) view.findViewById(R.id.title);
-//		LinearLayout contentLayout=(LinearLayout) view.findViewById(R.id.content_layout);
 		radioGroup=(RadioGroup) view.findViewById(R.id.radioGroup);
 		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			
@@ -63,6 +63,7 @@ public class TestFragment extends SherlockFragment{
 				currentQuestionIndex++;
 				if(currentQuestionIndex>=questions.size()){
 					currentQuestionIndex=0;
+					Collections.shuffle(questions);//打乱题目顺序
 				}
 				if(currentQuestionIndex==questions.size()-1){
 					opeButton.setText(R.string.restart);
@@ -83,7 +84,9 @@ public class TestFragment extends SherlockFragment{
 		for(SelectItem item:question.getOptions()){
 			RadioButton rb=new RadioButton(getActivity());
 			rb.setText(item.getTag()+". "+item.getText());
+			rb.setTextSize( 16);
 			rb.setTag(item.getTag());
+			rb.setButtonDrawable(R.drawable.btn_radio_off_holo_light);
 			radioGroup.addView(rb);
 		}
 		
@@ -142,6 +145,7 @@ public class TestFragment extends SherlockFragment{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Collections.shuffle(questions);//打乱题目顺序
 	}
 	
 }

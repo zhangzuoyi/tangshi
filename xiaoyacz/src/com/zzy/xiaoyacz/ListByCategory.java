@@ -14,8 +14,8 @@ import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 
 public class ListByCategory extends SherlockListActivity {
-	MyDB db;
-	List<TangShi> tangShiList;
+	private MyDB db;
+	private List<TangShi> tangShiList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,7 +37,6 @@ public class ListByCategory extends SherlockListActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
 				TangShi ts=tangShiList.get(position);
-				//Toast.makeText(MainActivity.this, ts.getContent(), Toast.LENGTH_SHORT).show();
 				Intent i=new Intent(ListByCategory.this,DetailActivity.class);
 				i.putExtra("ts", ts);
 				startActivity(i);
@@ -45,7 +44,7 @@ public class ListByCategory extends SherlockListActivity {
 			
 		});
 		TextView title=(TextView) findViewById(R.id.title);
-		title.setText(param);
+		title.setText(param);//设置分类标题
 	}
 
 }

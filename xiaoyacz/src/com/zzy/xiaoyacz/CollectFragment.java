@@ -13,8 +13,8 @@ import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 
 public class CollectFragment extends SherlockListFragment {
-	List<TangShi> tangShiList;
-	MyDB db;
+	private List<TangShi> tangShiList;
+	private MyDB db;
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		db=new MyDB(getActivity());
