@@ -27,7 +27,7 @@
 		<item name="android:textColor">#000</item>
 	</style>
 	<style name="MyTheme" parent="@style/Theme.Sherlock.Light">
-		<item name="android:textAppearance">@style/MyTextAppearance</item>
+		<item name="android:textColor">#000000</item>
 	</style>
 	
     
