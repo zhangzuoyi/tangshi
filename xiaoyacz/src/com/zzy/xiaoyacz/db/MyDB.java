@@ -83,6 +83,8 @@ public class MyDB {
 				ts.setContent(c.getString(c.getColumnIndex(Constants.CONTENT)));
 				ts.setDegree(c.getInt(c.getColumnIndex(Constants.DEGREE)));
 				ts.setExplain(c.getString(c.getColumnIndex(Constants.EXPLAIN)));
+				ts.setComments(c.getString(c.getColumnIndex(Constants.COMMENTS)));
+				ts.setTranslate(c.getString(c.getColumnIndex(Constants.TRANSLATE)));
 				ts.setId(c.getLong(c.getColumnIndex(Constants.KEY_ID)));
 //				ts.setImg(img);
 				ts.setTitle(c.getString(c.getColumnIndex(Constants.TITLE)));

@@ -33,6 +33,8 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			+ Constants.DEGREE + " integer, "
 			+ Constants.COLLECT + " integer, "
 			+ Constants.EXPLAIN + " text, "
+			+ Constants.COMMENTS + " text, "
+			+ Constants.TRANSLATE + " text, "
 			+ Constants.TYPE + " text, "
 			+ Constants.IMG + " text);";
 	private static final String CREATE_TABLE_QUESTION = "create table "
@@ -102,6 +104,10 @@ public class MyDBhelper extends SQLiteOpenHelper {
 					cv.put(Constants.TITLE, obj.getString("title"));
 				if(obj.has("type"))
 					cv.put(Constants.TYPE, obj.getString("type"));
+				if(obj.has(Constants.COMMENTS))
+					cv.put(Constants.COMMENTS, obj.getString(Constants.COMMENTS));
+				if(obj.has(Constants.TRANSLATE))
+					cv.put(Constants.TRANSLATE, obj.getString(Constants.TRANSLATE));
 				cv.put(Constants.COLLECT, 0);
 				db.insert(Constants.TABLE_NAME, null, cv);
 			}
@@ -152,6 +158,7 @@ public class MyDBhelper extends SQLiteOpenHelper {
 		Log.w("TaskDBAdapter", "Upgrading from version " + oldVersion + " to "
 				+ newVersion + ", which will destroy all old data");
 		db.execSQL("drop table if exists " + Constants.TABLE_NAME);
+		db.execSQL("drop table if exists " + Author.TABLE);
 		onCreate(db);
 	}
 

@@ -7,12 +7,14 @@ public class TangShi implements Serializable{
 	private String title;
 	private String author;
 	private String content;
-	private String explain;
+	private String explain;//赏析
 	private int img;
 	private String audio;
 	private int degree;//难度
 	private String type;
 	private int collectStatus;//收藏状态，0未收藏，1已收藏
+	private String comments;//注释
+	private String translate;//译文
 	public String getTitle() {
 		return title;
 	}
@@ -72,6 +74,18 @@ public class TangShi implements Serializable{
 	}
 	public void setCollectStatus(int collectStatus) {
 		this.collectStatus = collectStatus;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public String getTranslate() {
+		return translate;
+	}
+	public void setTranslate(String translate) {
+		this.translate = translate;
 	}
 	
 }

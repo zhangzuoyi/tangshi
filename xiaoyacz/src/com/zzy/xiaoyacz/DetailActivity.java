@@ -19,6 +19,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
+import com.zzy.xiaoyacz.util.StringUtil;
 //TODO 调整字体大小
 //TODO 有几种字体大小可选
 public class DetailActivity extends SherlockActivity {
@@ -50,11 +51,30 @@ public class DetailActivity extends SherlockActivity {
 		TextView title=(TextView) findViewById(R.id.title);
 		TextView author=(TextView) findViewById(R.id.author);
 		TextView content=(TextView) findViewById(R.id.content);
+		TextView commentsLabel=(TextView) findViewById(R.id.comments_label);
+		TextView comments=(TextView) findViewById(R.id.comments);
+		TextView translateLabel=(TextView) findViewById(R.id.translate_label);
+		TextView translate=(TextView) findViewById(R.id.translate);
+		TextView explainLabel=(TextView) findViewById(R.id.explain_label);
 		TextView explain=(TextView) findViewById(R.id.explain);
 		title.setText(ts.getTitle());
 		author.setText(ts.getAuthor());
 		content.setText(Html.fromHtml(ts.getContent()));
-		explain.setText(Html.fromHtml(ts.getExplain()));
+		if(StringUtil.isBlank(ts.getComments())){
+			commentsLabel.setVisibility(View.GONE);
+		}else{
+			comments.setText(Html.fromHtml(ts.getComments()));
+		}
+		if(StringUtil.isBlank(ts.getTranslate())){
+			translateLabel.setVisibility(View.GONE);
+		}else{
+			translate.setText(Html.fromHtml(ts.getTranslate()));
+		}
+		if(StringUtil.isBlank(ts.getExplain())){
+			explainLabel.setVisibility(View.GONE);
+		}else{
+			explain.setText(Html.fromHtml(ts.getExplain()));
+		}
 		
 		playPauseButton=(ImageButton) findViewById(R.id.button1);
 		seekbar=(SeekBar) findViewById(R.id.seek_bar);

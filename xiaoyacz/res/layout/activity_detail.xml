@@ -14,8 +14,7 @@
         style="@style/TitleStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"/>
     <TextView
         android:id="@+id/author"
         android:layout_width="fill_parent"
@@ -23,8 +22,7 @@
         android:layout_below="@id/title"
         android:textStyle="italic"
         android:gravity="center"
-        android:layout_marginTop="5dip"
-        android:text="@string/hello_world" />
+        android:layout_marginTop="5dip"/>
     <TextView
         android:id="@+id/content"
         android:layout_width="fill_parent"
@@ -33,15 +31,46 @@
          android:gravity="center"
         android:textSize="20sp"
         android:layout_marginTop="5dip"
-        android:lineSpacingMultiplier="1.5"
-        android:text="@string/hello_world" />
+        android:lineSpacingMultiplier="1.5"/>
+    <TextView
+        android:id="@+id/comments_label"
+        style="@style/DetailLabelStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+        android:text="@string/comments" />
+    <TextView
+        android:id="@+id/comments"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comments_label"
+        android:layout_margin="5dip" />
+    <TextView
+        android:id="@+id/translate_label"
+        style="@style/DetailLabelStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comments"
+        android:text="@string/translate" />
+    <TextView
+        android:id="@+id/translate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/translate_label"
+        android:layout_margin="5dip" />
+    <TextView
+        android:id="@+id/explain_label"
+        style="@style/DetailLabelStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/translate"
+        android:text="@string/explain" />
     <TextView
         android:id="@+id/explain"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content"
-        android:layout_margin="5dip"
-        android:text="@string/hello_world" />
+        android:layout_below="@id/explain_label"
+        android:layout_margin="5dip"/>
 </RelativeLayout>
 </ScrollView>
     
