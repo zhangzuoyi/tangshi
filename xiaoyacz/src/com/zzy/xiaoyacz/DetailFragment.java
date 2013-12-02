@@ -7,22 +7,25 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 import com.zzy.xiaoyacz.util.StringUtil;
-//TODO 调整字体大小
-//TODO 有几种字体大小可选
-public class DetailActivity extends SherlockActivity {
+
+public class DetailFragment extends SherlockFragment{
 	private TangShi ts;
 	private ImageButton playPauseButton;
 	private SeekBar seekbar;
@@ -40,23 +43,32 @@ public class DetailActivity extends SherlockActivity {
             handler.postDelayed(updateThread, 100);  
         }  
     };
+	public static DetailFragment newInstance(TangShi ts,MyDB db){
+		DetailFragment frag=new DetailFragment();
+		frag.ts=ts;
+		frag.db=db;
+		return frag;
+	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_detail);
-		db=new MyDB(this);
-		Bundle bundle=getIntent().getExtras();
-		ts=(TangShi) bundle.getSerializable("ts");
-		TextView title=(TextView) findViewById(R.id.title);
-		TextView author=(TextView) findViewById(R.id.author);
-		TextView content=(TextView) findViewById(R.id.content);
-		TextView commentsLabel=(TextView) findViewById(R.id.comments_label);
-		TextView comments=(TextView) findViewById(R.id.comments);
-		TextView translateLabel=(TextView) findViewById(R.id.translate_label);
-		TextView translate=(TextView) findViewById(R.id.translate);
-		TextView explainLabel=(TextView) findViewById(R.id.explain_label);
-		TextView explain=(TextView) findViewById(R.id.explain);
+	  public View onCreateView(LayoutInflater inflater,
+	      ViewGroup container, Bundle savedInstanceState) {
+
+	    if (container == null) {
+	      return null;
+	    }
+
+	    final View view = (View) inflater.inflate(
+	        R.layout.activity_detail, container, false);
+	    TextView title=(TextView) view.findViewById(R.id.title);
+		TextView author=(TextView)view. findViewById(R.id.author);
+		TextView content=(TextView)view. findViewById(R.id.content);
+		TextView commentsLabel=(TextView) view.findViewById(R.id.comments_label);
+		TextView comments=(TextView) view.findViewById(R.id.comments);
+		TextView translateLabel=(TextView) view.findViewById(R.id.translate_label);
+		TextView translate=(TextView) view.findViewById(R.id.translate);
+		TextView explainLabel=(TextView) view.findViewById(R.id.explain_label);
+		TextView explain=(TextView) view.findViewById(R.id.explain);
 		title.setText(ts.getTitle());
 		author.setText(ts.getAuthor());
 		content.setText(Html.fromHtml(ts.getContent()));
@@ -76,8 +88,8 @@ public class DetailActivity extends SherlockActivity {
 			explain.setText(Html.fromHtml(ts.getExplain()));
 		}
 		
-		playPauseButton=(ImageButton) findViewById(R.id.button1);
-		seekbar=(SeekBar) findViewById(R.id.seek_bar);
+		playPauseButton=(ImageButton) view.findViewById(R.id.button1);
+		seekbar=(SeekBar) view.findViewById(R.id.seek_bar);
 		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){//有音频文件
 			new MediaPlayerTask().execute();
 			
@@ -85,9 +97,10 @@ public class DetailActivity extends SherlockActivity {
 			seekbar.setVisibility(View.GONE);
 			playPauseButton.setVisibility(View.GONE);
 		}
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-	}
-
+//		getActionBar().setDisplayHomeAsUpEnabled(true);
+		setHasOptionsMenu(true);
+	    return view;
+	  }
 	void pauseMP() {
 		playPauseButton.setImageResource(android.R.drawable.ic_media_play);
 		m_mediaPlayer.pause();
@@ -100,7 +113,7 @@ public class DetailActivity extends SherlockActivity {
 	}
 	
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		if(m_mediaPlayer != null && m_mediaPlayer.isPlaying()) {
 			needToResume = true;
 			pauseMP();
@@ -109,19 +122,27 @@ public class DetailActivity extends SherlockActivity {
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		if(needToResume && m_mediaPlayer != null) {
 			startMP();
 		}
 	}
 
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getSupportMenuInflater().inflate(R.menu.activity_detail, menu);
+//		setMenuItemIcon(menu.findItem(R.id.collect));
+//		return true;
+//	}
+
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getSupportMenuInflater().inflate(R.menu.activity_detail, menu);
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.activity_detail, menu);
 		setMenuItemIcon(menu.findItem(R.id.collect));
-		return true;
 	}
 
 	@Override
@@ -132,11 +153,11 @@ public class DetailActivity extends SherlockActivity {
 			if(ts.getCollectStatus()==1){
 				db.cancelCollect(ts.getId());
 				ts.setCollectStatus(0);
-				Toast.makeText(this, getResources().getString(R.string.cancel_collect_success), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), getResources().getString(R.string.cancel_collect_success), Toast.LENGTH_SHORT).show();
 			}else{
 				db.collect(ts.getId());
 				ts.setCollectStatus(1);
-				Toast.makeText(this, getResources().getString(R.string.collect_success), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), getResources().getString(R.string.collect_success), Toast.LENGTH_SHORT).show();
 			}
 			db.close();
 			setMenuItemIcon(item);
@@ -158,7 +179,7 @@ public class DetailActivity extends SherlockActivity {
 		protected Void doInBackground(Void... params) {
 //			NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
 
-			m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
+			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
 			/*ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);

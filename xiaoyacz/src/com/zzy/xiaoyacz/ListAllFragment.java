@@ -1,5 +1,6 @@
 package com.zzy.xiaoyacz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -36,9 +37,12 @@ public class ListAllFragment extends SherlockListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				TangShi ts=tangShiList.get(position);
-				Intent i=new Intent(getActivity(),DetailActivity.class);
-				i.putExtra("ts", ts);
+//				TangShi ts=tangShiList.get(position);
+//				Intent i=new Intent(getActivity(),DetailActivity.class);
+//				i.putExtra("ts", ts);
+				Intent i=new Intent(getActivity(),DetailFragmentActivity.class);
+				i.putExtra(DetailFragmentActivity.CURRENTINDEX, position);
+				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
 				startActivity(i);
 			}
 			

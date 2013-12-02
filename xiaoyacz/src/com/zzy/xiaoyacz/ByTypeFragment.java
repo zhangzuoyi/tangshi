@@ -33,7 +33,7 @@ public class ByTypeFragment extends SherlockFragment {
 					Button b=(Button)v;
 					String type=b.getText().toString();
 					Intent i=new Intent(getActivity(),ListByCategory.class);
-					i.putExtra("type", "type");
+					i.putExtra("type", ListByCategory.TYPE_TYPE);
 					i.putExtra("param", type);
 					startActivity(i);
 				}

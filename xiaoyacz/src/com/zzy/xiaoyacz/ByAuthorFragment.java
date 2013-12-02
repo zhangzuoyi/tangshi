@@ -45,7 +45,7 @@ public class ByAuthorFragment extends SherlockListFragment {
 					long id) {
 				Author author=authors.get(position);
 				Intent i=new Intent(getActivity(),ListByCategory.class);
-				i.putExtra("type", "author");
+				i.putExtra("type", ListByCategory.TYPE_AUTHOR);
 				i.putExtra("param", author.getName());
 				startActivity(i);
 			}

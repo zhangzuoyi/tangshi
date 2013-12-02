@@ -103,10 +103,22 @@ public class MyDB {
 				Author ts=new Author();
 				ts.setName(c.getString(c.getColumnIndex(Author.NAME)));
 				ts.setInitial(c.getString(c.getColumnIndex(Author.INITIAL)));
+				ts.setIntro(c.getString(c.getColumnIndex(Author.INTRO)));
 				list.add(ts);
 			}while(c.moveToNext());
 		}
 		return list;
+	}
+	public Author findAuthorByName(String name){
+		Cursor c = db.query(Author.TABLE, null, Author.NAME+"=?", new String[]{name}, null, null,null);
+		if(c.moveToFirst()){
+			Author ts=new Author();
+			ts.setName(c.getString(c.getColumnIndex(Author.NAME)));
+			ts.setInitial(c.getString(c.getColumnIndex(Author.INITIAL)));
+			ts.setIntro(c.getString(c.getColumnIndex(Author.INTRO)));
+			return ts;
+		}
+		return null;
 	}
 	
 //	public List<String> authorList(){

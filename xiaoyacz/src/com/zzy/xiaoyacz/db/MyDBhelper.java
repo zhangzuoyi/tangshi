@@ -145,6 +145,8 @@ public class MyDBhelper extends SQLiteOpenHelper {
 					cv.put(Author.NAME, obj.getString("name"));
 				if(obj.has("initial"))
 					cv.put(Author.INITIAL, obj.getString("initial"));
+				if(obj.has(Author.INTRO))
+					cv.put(Author.INTRO, obj.getString(Author.INTRO));
 				db.insert(Author.TABLE, null, cv);
 			}
 			

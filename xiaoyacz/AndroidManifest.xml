@@ -40,7 +40,15 @@
         </activity>
         <activity
             android:name="com.zzy.xiaoyacz.ListByCategory"
-            android:label="@string/view_by_category" >
+            android:label="@string/view_by_category" 
+            android:parentActivityName="com.zzy.xiaoyacz.NewFragmentTabs">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.zzy.xiaoyacz.NewFragmentTabs" />
+        </activity>
+        <activity
+            android:name="com.zzy.xiaoyacz.DetailFragmentActivity"
+            android:label="@string/title_activity_detail" >
         </activity>
     </application>
 
