@@ -113,6 +113,9 @@ public class NewFragmentTabs extends SherlockFragmentActivity {
 		if(item.getItemId()==R.id.menu_settings){
 			Intent i=new Intent(this,SettingsActivity.class);
 			startActivity(i);
+		}else if(item.getItemId()==R.id.menu_about){
+			AboutDialog newFragment = new AboutDialog();
+		    newFragment.show(getSupportFragmentManager(), "dialog");
 		}
 		return true;
 	}

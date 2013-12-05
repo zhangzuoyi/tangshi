@@ -1,23 +1,29 @@
 package com.zzy.xiaoyacz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -91,8 +97,8 @@ public class DetailFragment extends SherlockFragment{
 		playPauseButton=(ImageButton) view.findViewById(R.id.button1);
 		seekbar=(SeekBar) view.findViewById(R.id.seek_bar);
 		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){//有音频文件
-			new MediaPlayerTask().execute();
-			
+//			new MediaPlayerTask().execute();
+			setPlayPauseButtonAction2();
 		}else{//没有音频文件
 			seekbar.setVisibility(View.GONE);
 			playPauseButton.setVisibility(View.GONE);
@@ -171,7 +177,99 @@ public class DetailFragment extends SherlockFragment{
 			item.setIcon(android.R.drawable.btn_star_big_off);
 		}
 	}
+	/**
+	 * 设置播放按钮的动作
+	 */
+	private void setPlayPauseButtonAction(){
+		initMediaplayer();
+		//m_mediaPlayer不为空，设置播放动作
+		if(m_mediaPlayer!=null){
+			playPauseButton.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					//播放音频
+					if(m_mediaPlayer.isPlaying()) {
+						pauseMP();
+					}else{
+						startMP();
+					}
+				}
+			});
+		}else{//m_mediaPlayer为空，设置播放不可用
+			playPauseButton.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(getActivity(), "网络不给力", Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
+		
+	}
+	private void initMediaplayer(){
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean onlyUseWifi=settings.getBoolean("onlyuse_wifi", true);//是否只使用wifi播放音频
+		NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
+		ConnectivityManager connectivity = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+		wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		//wifi可用，初始化m_mediaPlayer
+		if(wifiNetworkInfo.isConnected()){
+			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
+		}else if(mobileNetworkInfo.isConnected()&&!onlyUseWifi){//移动网络可用，且设置了"只使用WIFI"为false，初始化m_mediaPlayer
+			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
+		}
+		
+		if(m_mediaPlayer!=null){
+			m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
 
+				@Override
+				public void onCompletion(MediaPlayer arg0) {
+					playPauseButton.setImageResource(android.R.drawable.ic_media_play);
+					handler.removeCallbacks(updateThread);
+					seekbar.setProgress(0);
+				}
+				
+			});
+			seekbar.setMax(m_mediaPlayer.getDuration());
+			seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
+	            @Override  
+	            public void onProgressChanged(SeekBar seekBar, int progress,  
+	                    boolean fromUser) {  
+	                // fromUser判断是用户改变的滑块的值  
+	                if(fromUser==true){  
+	                	m_mediaPlayer.seekTo(progress);  
+	                }  
+	            }  
+	            @Override  
+	            public void onStartTrackingTouch(SeekBar seekBar) {  
+	            }  
+	            @Override  
+	            public void onStopTrackingTouch(SeekBar seekBar) {  
+	            }  
+	        });
+		}
+	}
+	private void setPlayPauseButtonAction2(){
+		playPauseButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(m_mediaPlayer==null){
+					initMediaplayer();
+				}
+				
+				if(m_mediaPlayer!=null){
+					//播放音频
+					if(m_mediaPlayer.isPlaying()) {
+						pauseMP();
+					}else{
+						startMP();
+					}
+				}else{
+					Toast.makeText(getActivity(), "网络不给力", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
 
 	private class MediaPlayerTask extends AsyncTask<Void,Void,Void>{
 
@@ -180,20 +278,20 @@ public class DetailFragment extends SherlockFragment{
 //			NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
 
 			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
-			/*ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-			//||(!onlyWifi&&mobileNetworkInfo.isConnected())
-			if(wifiNetworkInfo.isConnected()){
-				m_mediaPlayer = MediaPlayer.create(DetailActivity.this,Uri.parse(aliyunUrl+ts.getAudio()));
-				Log.i("network", "connected");
-			}else{
-				m_mediaPlayer=null;
-				String msg=getResources().getString(R.string.no_network_no_recite);
-				Looper.prepare();
-				Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_SHORT).show();
-				Looper.loop();
-			}*/
+//			ConnectivityManager connectivity = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+//			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//			//||(!onlyWifi&&mobileNetworkInfo.isConnected())
+//			if(wifiNetworkInfo.isConnected()){
+//				m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
+//				Log.i("network", "connected");
+//			}else{
+//				m_mediaPlayer=null;
+//				String msg=getResources().getString(R.string.no_network_no_recite);
+//				Looper.prepare();
+//				Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+//				Looper.loop();
+//			}
 			return null;
 		}
 

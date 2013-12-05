@@ -23,5 +23,6 @@
     <string name="comments">注释</string>
     <string name="translate">译文</string>
     <string name="explain">赏析</string>
+    <string name="about">关于</string>
 
 </resources>

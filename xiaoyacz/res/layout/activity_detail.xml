@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/author"
          android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:layout_marginTop="5dip"
         android:lineSpacingMultiplier="1.5"/>
     <TextView
