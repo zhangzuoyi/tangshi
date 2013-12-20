@@ -80,16 +80,19 @@ public class DetailFragment extends SherlockFragment{
 		content.setText(Html.fromHtml(ts.getContent()));
 		if(StringUtil.isBlank(ts.getComments())){
 			commentsLabel.setVisibility(View.GONE);
+			comments.setVisibility(View.GONE);
 		}else{
 			comments.setText(Html.fromHtml(ts.getComments()));
 		}
 		if(StringUtil.isBlank(ts.getTranslate())){
 			translateLabel.setVisibility(View.GONE);
+			translate.setVisibility(View.GONE);
 		}else{
 			translate.setText(Html.fromHtml(ts.getTranslate()));
 		}
 		if(StringUtil.isBlank(ts.getExplain())){
 			explainLabel.setVisibility(View.GONE);
+			explain.setVisibility(View.GONE);
 		}else{
 			explain.setText(Html.fromHtml(ts.getExplain()));
 		}

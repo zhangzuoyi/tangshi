@@ -21,6 +21,7 @@ import com.zzy.xiaoyacz.db.MyDB;
 public class ListByCategory extends SherlockListActivity {
 	private MyDB db;
 	private List<TangShi> tangShiList;
+	private long[] tangshiIds;
 	private String explain;//分类或者诗人的介绍
 	private String type;
 	private String param;
@@ -45,6 +46,12 @@ public class ListByCategory extends SherlockListActivity {
 			explain=Type.getTypeExplain(param);
 		}
 		db.close();
+		tangshiIds=new long[tangShiList.size()];
+		int i=0;
+		for(TangShi ts:tangShiList){
+			tangshiIds[i]=ts.getId();
+			i++;
+		}
 		if(explain!=null){//set header要放在set adapter前面
 			LayoutInflater inflator = LayoutInflater.from(this);
 		    View header = inflator.inflate(R.layout.by_catetory_header, getListView(), false);
@@ -64,7 +71,8 @@ public class ListByCategory extends SherlockListActivity {
 				String title=null;
 				Intent i=new Intent(ListByCategory.this,DetailFragmentActivity.class);
 				i.putExtra(DetailFragmentActivity.CURRENTINDEX, position);
-				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
+//				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
+				i.putExtra(DetailFragmentActivity.TANGSHIIDS, tangshiIds);
 				if(type.equals(TYPE_AUTHOR)){
 					title=param+"诗集";
 				}else{

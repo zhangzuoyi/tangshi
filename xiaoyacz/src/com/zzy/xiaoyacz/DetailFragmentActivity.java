@@ -1,7 +1,5 @@
 package com.zzy.xiaoyacz;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,11 +13,12 @@ import com.zzy.xiaoyacz.db.MyDB;
 
 public class DetailFragmentActivity extends SherlockFragmentActivity{
 	private ViewPager viewPager;
-	private List<TangShi> tangshis;//唐诗列表
+	private long[] tangshiIds;//用ID代替唐诗对象，能减少内存占用，提高速度
 	private int currentIndex;//当前查看的序号
 	private MyDB db;
 	public static final String CURRENTINDEX="ci";
 	public static final String TANGSHIS="tss";
+	public static final String TANGSHIIDS="tsids";
 	public static final String TITLE="title";
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -27,7 +26,7 @@ public class DetailFragmentActivity extends SherlockFragmentActivity{
 		setContentView(R.layout.datail_activity);
 		viewPager=(ViewPager) findViewById(R.id.viewpager);
 		currentIndex=getIntent().getIntExtra(CURRENTINDEX, 0);
-		tangshis=getIntent().getParcelableArrayListExtra(TANGSHIS);
+		tangshiIds=getIntent().getLongArrayExtra(TANGSHIIDS);
 		db=new MyDB(this);
 		viewPager.setAdapter(new ViewPagerAdapter(this));
 		viewPager.setCurrentItem(currentIndex);
@@ -57,14 +56,17 @@ public class DetailFragmentActivity extends SherlockFragmentActivity{
 
 		@Override
 		public Fragment getItem(int index) {
-			TangShi ts=tangshis.get(index);
+			long id=tangshiIds[index];
+			db.open();
+			TangShi ts=db.findTangshiById(id);
+			db.close();
 
 			return DetailFragment.newInstance(ts, db);
 		}
 
 		@Override
 		public int getCount() {
-			return tangshis.size();
+			return tangshiIds.length;
 		}
 		
 	}

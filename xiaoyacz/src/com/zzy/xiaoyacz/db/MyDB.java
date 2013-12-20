@@ -66,6 +66,15 @@ public class MyDB {
 		return cursorToTangshi(c);
 	}
 	
+	public TangShi findTangshiById(long id){
+		Cursor c = db.query(Constants.TABLE_NAME, null,Constants.KEY_ID+ "=?", new String[]{String.valueOf(id)}, null, null,null);
+		List<TangShi> list=cursorToTangshi(c);
+		if(list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
+	
 	public List<TangShi> findTangshi(String condition){
 		String sql="select * from "+Constants.TABLE_NAME+" where "+Constants.AUTHOR+" like '%"+condition+"%' ";
 		sql=sql+"or "+Constants.TITLE+" like '%"+condition+"%' ";

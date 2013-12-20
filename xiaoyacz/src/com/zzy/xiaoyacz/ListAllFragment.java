@@ -22,6 +22,7 @@ import com.zzy.xiaoyacz.db.MyDB;
 
 public class ListAllFragment extends SherlockListFragment {
 	private List<TangShi> tangShiList;
+	private long[] tangshiIds;
 	private MyDB db;
 	private SearchView mSearchView;
 	@Override
@@ -31,6 +32,12 @@ public class ListAllFragment extends SherlockListFragment {
 		db.open();
 		tangShiList=db.tangShiList();
 		db.close();
+		tangshiIds=new long[tangShiList.size()];
+		int i=0;
+		for(TangShi ts:tangShiList){
+			tangshiIds[i]=ts.getId();
+			i++;
+		}
 		setListAdapter(new TangshiListAdapter(getActivity(),tangShiList));
 		getListView().setOnItemClickListener(new OnItemClickListener(){
 
@@ -42,7 +49,8 @@ public class ListAllFragment extends SherlockListFragment {
 //				i.putExtra("ts", ts);
 				Intent i=new Intent(getActivity(),DetailFragmentActivity.class);
 				i.putExtra(DetailFragmentActivity.CURRENTINDEX, position);
-				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
+//				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
+				i.putExtra(DetailFragmentActivity.TANGSHIIDS, tangshiIds);
 				startActivity(i);
 			}
 			
