@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 
-public class DetailFragmentActivity extends SherlockFragmentActivity{
+public class DetailFragmentActivity extends FragmentActivity{
 	private ViewPager viewPager;
 	private long[] tangshiIds;//用ID代替唐诗对象，能减少内存占用，提高速度
 	private int currentIndex;//当前查看的序号
@@ -30,10 +29,10 @@ public class DetailFragmentActivity extends SherlockFragmentActivity{
 		db=new MyDB(this);
 		viewPager.setAdapter(new ViewPagerAdapter(this));
 		viewPager.setCurrentItem(currentIndex);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		String title=getIntent().getStringExtra(TITLE);
 		if(title!=null){
-			getSupportActionBar().setTitle(title);
+			getActionBar().setTitle(title);
 		}
 	}
 

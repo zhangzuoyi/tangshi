@@ -74,7 +74,7 @@
 </RelativeLayout>
 </ScrollView>
     
-    <RelativeLayout
+    <!-- <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/bottom_bar"
@@ -95,13 +95,6 @@
 	        android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
 	        android:layout_toRightOf="@id/button1" />
-        <!-- <ImageButton
-	        android:id="@+id/button2"
-	        android:layout_width="48dp"
-	        android:layout_height="48dp"
-	        android:layout_alignParentRight="true"
-	        android:scaleType="centerInside"
-	        android:src="@drawable/player_record" /> -->
-    </RelativeLayout>
+    </RelativeLayout> -->
 
 </RelativeLayout>

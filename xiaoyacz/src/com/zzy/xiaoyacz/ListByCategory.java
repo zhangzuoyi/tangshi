@@ -1,24 +1,23 @@
 package com.zzy.xiaoyacz;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.Author;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.data.Type;
 import com.zzy.xiaoyacz.db.MyDB;
 
-public class ListByCategory extends SherlockListActivity {
+public class ListByCategory extends ListActivity {
 	private MyDB db;
 	private List<TangShi> tangShiList;
 	private long[] tangshiIds;
@@ -85,7 +84,7 @@ public class ListByCategory extends SherlockListActivity {
 		});
 		TextView title=(TextView) findViewById(R.id.title);
 		title.setText(param);//设置分类标题
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

@@ -20,28 +20,24 @@
         android:layout_marginLeft="5dp"
         android:background="@drawable/type_icon_bg"/>
     
-    <LinearLayout android:orientation="vertical"
-        android:layout_toRightOf="@+id/iconTv"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <TextView
+    <TextView
         android:id="@+id/textView1"
+        android:layout_toRightOf="@+id/iconTv"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="TextView" />
-        <TextView
+    <TextView
         android:id="@+id/textView2"
+        android:layout_below="@id/textView1"
+        android:gravity="right"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:textStyle="italic"
         android:text="TextView" />
-        
-    </LinearLayout>
-
-    
 
 </RelativeLayout>

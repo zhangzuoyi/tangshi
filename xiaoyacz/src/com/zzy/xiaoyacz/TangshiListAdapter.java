@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zzy.xiaoyacz.data.TangShi;
@@ -61,7 +60,11 @@ public class TangshiListAdapter  extends ArrayAdapter<TangShi>{
 		return convertView;
 	}
 	private String getIconText(String type){
-		return icons.get(type);
+		String text=icons.get(type);
+		if(text==null){
+			return String.format(ICON_FORMAT, "未","知");
+		}
+		return text;
 	}
 	static class ViewHolder{
 //		public ImageView imageView;

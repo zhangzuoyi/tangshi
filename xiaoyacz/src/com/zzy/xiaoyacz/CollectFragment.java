@@ -5,15 +5,15 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 
-public class CollectFragment extends SherlockListFragment {
+public class CollectFragment extends ListFragment {
 	private List<TangShi> tangShiList;
 	private MyDB db;
 	public void onActivityCreated(Bundle savedInstanceState) {

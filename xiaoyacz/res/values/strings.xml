@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">学唐诗</string>
+    <string name="app_name">唐诗赏析</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">设置</string>
     <string name="title_activity_detail">唐诗阅读</string>
@@ -24,5 +24,8 @@
     <string name="translate">译文</string>
     <string name="explain">赏析</string>
     <string name="about">关于</string>
+    <string name="play">播放</string>
+    <string name="netconection_not_available">网络不可用</string>
+    <string name="only_play_wifi_on">只在连接WIFI时播放</string>
 
 </resources>

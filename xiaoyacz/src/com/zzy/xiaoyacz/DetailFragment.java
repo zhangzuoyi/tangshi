@@ -10,11 +10,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -23,20 +25,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
+import com.zzy.xiaoyacz.util.ConfigUtil;
+import com.zzy.xiaoyacz.util.NetConnectionUtil;
 import com.zzy.xiaoyacz.util.StringUtil;
 
-public class DetailFragment extends SherlockFragment{
+public class DetailFragment extends Fragment{
 	private TangShi ts;
-	private ImageButton playPauseButton;
-	private SeekBar seekbar;
-	private MediaPlayer m_mediaPlayer;
-	public static final String aliyunUrl="http://oss.aliyuncs.com/object_test/tangshi/";
+//	private ImageButton playPauseButton;
+//	private SeekBar seekbar;
+	private MenuItem playItem;
+	private MediaPlayer mediaPlayer;
 	private MyDB db;
 	boolean onlyWifi;
 	boolean needToResume = false;//音频是否需要继续播放
@@ -44,7 +44,7 @@ public class DetailFragment extends SherlockFragment{
 	private Runnable updateThread = new Runnable(){  
         public void run() {  
             //获得歌曲现在播放位置并设置成播放进度条的值  
-        	seekbar.setProgress(m_mediaPlayer.getCurrentPosition());  
+//        	seekbar.setProgress(m_mediaPlayer.getCurrentPosition());  
             //每次延迟100毫秒再启动线程  
             handler.postDelayed(updateThread, 100);  
         }  
@@ -97,33 +97,13 @@ public class DetailFragment extends SherlockFragment{
 			explain.setText(Html.fromHtml(ts.getExplain()));
 		}
 		
-		playPauseButton=(ImageButton) view.findViewById(R.id.button1);
-		seekbar=(SeekBar) view.findViewById(R.id.seek_bar);
-		if(ts.getAudio()!=null&&!ts.getAudio().equals("")){//有音频文件
-//			new MediaPlayerTask().execute();
-			setPlayPauseButtonAction2();
-		}else{//没有音频文件
-			seekbar.setVisibility(View.GONE);
-			playPauseButton.setVisibility(View.GONE);
-		}
-//		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setHasOptionsMenu(true);
 	    return view;
 	  }
-	void pauseMP() {
-		playPauseButton.setImageResource(android.R.drawable.ic_media_play);
-		m_mediaPlayer.pause();
-		handler.removeCallbacks(updateThread);
-	}
-	void startMP() {
-		m_mediaPlayer.start();
-		playPauseButton.setImageResource(android.R.drawable.ic_media_pause);
-		handler.post(updateThread);
-	}
 	
 	@Override
 	public void onPause() {
-		if(m_mediaPlayer != null && m_mediaPlayer.isPlaying()) {
+		if(mediaPlayer != null && mediaPlayer.isPlaying()) {
 			needToResume = true;
 			pauseMP();
 		}
@@ -133,25 +113,32 @@ public class DetailFragment extends SherlockFragment{
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(needToResume && m_mediaPlayer != null) {
+		if(needToResume && mediaPlayer != null) {
 			startMP();
 		}
 	}
-
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getSupportMenuInflater().inflate(R.menu.activity_detail, menu);
-//		setMenuItemIcon(menu.findItem(R.id.collect));
-//		return true;
-//	}
-
+	private void pauseMP() {
+		playItem.setIcon(android.R.drawable.ic_media_play);
+		mediaPlayer.pause();
+	}
+	private void startMP() {
+		mediaPlayer.start();
+		playItem.setIcon(android.R.drawable.ic_media_pause);
+	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.activity_detail, menu);
-		setMenuItemIcon(menu.findItem(R.id.collect));
+		setCollectMenuItemIcon(menu.findItem(R.id.collect));
+		playItem=menu.findItem(R.id.playItem);
+		initPlayItem();
+	}
+	private void initPlayItem(){
+		playItem.setIcon(android.R.drawable.ic_media_play);
+		if(StringUtil.isBlank(ts.getAudio())){
+			playItem.setVisible(false);
+		}
 	}
 
 	@Override
@@ -169,178 +156,78 @@ public class DetailFragment extends SherlockFragment{
 				Toast.makeText(getActivity(), getResources().getString(R.string.collect_success), Toast.LENGTH_SHORT).show();
 			}
 			db.close();
-			setMenuItemIcon(item);
+			setCollectMenuItemIcon(item);
+		}else if(item.getItemId()==R.id.playItem){
+			playAudio();
 		}
 		return true;
 	}
-	private void setMenuItemIcon(MenuItem item){
+	private void playAudio(){
+		//网络是否可用
+		if(NetConnectionUtil.isNetworkAvailable(getActivity())){
+			//WIFI是否可用
+			if(NetConnectionUtil.isWifiAvailable(getActivity())){
+				playAudioWithMediaplayer();
+			}else{
+				//是否设置了只在WIFI下播放音频
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+				boolean onlyUseWifi=prefs.getBoolean("onlyuse_wifi", true);
+				if(onlyUseWifi){
+					Toast.makeText(getActivity(), R.string.only_play_wifi_on, Toast.LENGTH_SHORT).show();
+				}else{
+					// TODO 在播放前提示
+					playAudioWithMediaplayer();
+				}
+			}
+		}else{
+			Toast.makeText(getActivity(), R.string.netconection_not_available, Toast.LENGTH_SHORT).show();
+		}
+	}
+	private void playAudioWithMediaplayer(){
+		if(mediaPlayer==null){
+			//启动TASK来初始化mediaPlayer
+//			playItem.setIcon(R.drawable.progress_medium);
+			playItem.setActionView(R.layout.actionbar_indeterminate_progress);
+			playItem.setEnabled(false);
+			new MediaPlayerTask().execute();
+		}else{
+			if(mediaPlayer.isPlaying()) {
+				pauseMP();
+			}else{
+				startMP();
+			}
+		}
+	}
+	private void setCollectMenuItemIcon(MenuItem item){
 		if(ts.getCollectStatus()==1){
 			item.setIcon(android.R.drawable.btn_star_big_on);
 		}else{
 			item.setIcon(android.R.drawable.btn_star_big_off);
 		}
 	}
-	/**
-	 * 设置播放按钮的动作
-	 */
-	private void setPlayPauseButtonAction(){
-		initMediaplayer();
-		//m_mediaPlayer不为空，设置播放动作
-		if(m_mediaPlayer!=null){
-			playPauseButton.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					//播放音频
-					if(m_mediaPlayer.isPlaying()) {
-						pauseMP();
-					}else{
-						startMP();
-					}
-				}
-			});
-		}else{//m_mediaPlayer为空，设置播放不可用
-			playPauseButton.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					Toast.makeText(getActivity(), "网络不给力", Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
-		
-	}
-	private void initMediaplayer(){
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		boolean onlyUseWifi=settings.getBoolean("onlyuse_wifi", true);//是否只使用wifi播放音频
-		NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
-		ConnectivityManager connectivity = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-		wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-		mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-		//wifi可用，初始化m_mediaPlayer
-		if(wifiNetworkInfo.isConnected()){
-			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
-		}else if(mobileNetworkInfo.isConnected()&&!onlyUseWifi){//移动网络可用，且设置了"只使用WIFI"为false，初始化m_mediaPlayer
-			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
-		}
-		
-		if(m_mediaPlayer!=null){
-			m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
-
-				@Override
-				public void onCompletion(MediaPlayer arg0) {
-					playPauseButton.setImageResource(android.R.drawable.ic_media_play);
-					handler.removeCallbacks(updateThread);
-					seekbar.setProgress(0);
-				}
-				
-			});
-			seekbar.setMax(m_mediaPlayer.getDuration());
-			seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
-	            @Override  
-	            public void onProgressChanged(SeekBar seekBar, int progress,  
-	                    boolean fromUser) {  
-	                // fromUser判断是用户改变的滑块的值  
-	                if(fromUser==true){  
-	                	m_mediaPlayer.seekTo(progress);  
-	                }  
-	            }  
-	            @Override  
-	            public void onStartTrackingTouch(SeekBar seekBar) {  
-	            }  
-	            @Override  
-	            public void onStopTrackingTouch(SeekBar seekBar) {  
-	            }  
-	        });
-		}
-	}
-	private void setPlayPauseButtonAction2(){
-		playPauseButton.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				if(m_mediaPlayer==null){
-					initMediaplayer();
-				}
-				
-				if(m_mediaPlayer!=null){
-					//播放音频
-					if(m_mediaPlayer.isPlaying()) {
-						pauseMP();
-					}else{
-						startMP();
-					}
-				}else{
-					Toast.makeText(getActivity(), "网络不给力", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-	}
 
 	private class MediaPlayerTask extends AsyncTask<Void,Void,Void>{
 
 		@Override
 		protected Void doInBackground(Void... params) {
-//			NetworkInfo wifiNetworkInfo, mobileNetworkInfo;
+			mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(ConfigUtil.ALIYUN_URL+ts.getAudio()));
+			mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
 
-			m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
-//			ConnectivityManager connectivity = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-//			wifiNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//			mobileNetworkInfo =connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//			//||(!onlyWifi&&mobileNetworkInfo.isConnected())
-//			if(wifiNetworkInfo.isConnected()){
-//				m_mediaPlayer = MediaPlayer.create(getActivity(),Uri.parse(aliyunUrl+ts.getAudio()));
-//				Log.i("network", "connected");
-//			}else{
-//				m_mediaPlayer=null;
-//				String msg=getResources().getString(R.string.no_network_no_recite);
-//				Looper.prepare();
-//				Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-//				Looper.loop();
-//			}
+				@Override
+				public void onCompletion(MediaPlayer arg0) {
+					playItem.setIcon(android.R.drawable.ic_media_play);
+				}
+				
+			});
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
-			if(m_mediaPlayer==null)
-				return;
-			
-			m_mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
-
-				@Override
-				public void onCompletion(MediaPlayer arg0) {
-					playPauseButton.setImageResource(android.R.drawable.ic_media_play);
-					handler.removeCallbacks(updateThread);
-					seekbar.setProgress(0);
-				}
-				
-			});
-			playPauseButton.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					//播放音频
-					if(m_mediaPlayer.isPlaying()) {
-						pauseMP();
-					}else{
-						startMP();
-					}
-				}
-			});
-			seekbar.setMax(m_mediaPlayer.getDuration());
-			seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {  
-	            @Override  
-	            public void onProgressChanged(SeekBar seekBar, int progress,  
-	                    boolean fromUser) {  
-	                // fromUser判断是用户改变的滑块的值  
-	                if(fromUser==true){  
-	                	m_mediaPlayer.seekTo(progress);  
-	                }  
-	            }  
-	            @Override  
-	            public void onStartTrackingTouch(SeekBar seekBar) {  
-	            }  
-	            @Override  
-	            public void onStopTrackingTouch(SeekBar seekBar) {  
-	            }  
-	        });
+//			playItem.setIcon(android.R.drawable.ic_media_play);
+			playItem.setActionView(null);
+			playItem.setEnabled(true);
+			playAudioWithMediaplayer();
 		}
 	}
 }

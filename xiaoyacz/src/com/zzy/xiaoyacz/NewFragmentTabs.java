@@ -12,16 +12,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
-public class NewFragmentTabs extends SherlockFragmentActivity {
+public class NewFragmentTabs extends FragmentActivity {
 	private TabHost mTabHost;
 	private ViewPager viewPager;
 	private List<FragmentInfo> infos;
@@ -104,7 +102,7 @@ public class NewFragmentTabs extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 

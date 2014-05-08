@@ -8,12 +8,12 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceActivity.Header;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 //TODO 这个类要再好好看看
-public class SettingsActivity extends SherlockPreferenceActivity {
+public class SettingsActivity extends PreferenceActivity {
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
 
 	@Override

@@ -3,11 +3,10 @@ package com.zzy.xiaoyacz;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.Html;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
-
-public class AboutDialog extends SherlockDialogFragment{
+public class AboutDialog extends DialogFragment{
 	private static final String msg="“熟读唐诗三百首，不会吟诗也会吟。”<br/>愿这款小软件能给您的唐诗学习带来一点帮助。<br/>作者Email: zhangzuoyi@163.com，欢迎提出意见和建议！";
 
 	@Override
@@ -25,7 +24,7 @@ public class AboutDialog extends SherlockDialogFragment{
                });*/
         builder.setMessage(Html.fromHtml(msg));
         builder.setTitle(R.string.about);
-        builder.setIcon(R.drawable.notebook_icon);
+        builder.setIcon(R.drawable.logo);
         // Create the AlertDialog object and return it
         return builder.create();
 	}

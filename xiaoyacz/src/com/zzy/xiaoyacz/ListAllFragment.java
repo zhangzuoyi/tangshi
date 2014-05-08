@@ -1,11 +1,14 @@
 package com.zzy.xiaoyacz;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,14 +16,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.SearchView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 
-public class ListAllFragment extends SherlockListFragment {
+public class ListAllFragment extends ListFragment {
 	private List<TangShi> tangShiList;
 	private long[] tangshiIds;
 	private MyDB db;
@@ -32,12 +31,7 @@ public class ListAllFragment extends SherlockListFragment {
 		db.open();
 		tangShiList=db.tangShiList();
 		db.close();
-		tangshiIds=new long[tangShiList.size()];
-		int i=0;
-		for(TangShi ts:tangShiList){
-			tangshiIds[i]=ts.getId();
-			i++;
-		}
+		resetTangshiIds();
 		setListAdapter(new TangshiListAdapter(getActivity(),tangShiList));
 		getListView().setOnItemClickListener(new OnItemClickListener(){
 
@@ -55,6 +49,14 @@ public class ListAllFragment extends SherlockListFragment {
 			}
 			
 		});
+	}
+	private void resetTangshiIds(){
+		tangshiIds=new long[tangShiList.size()];
+		int i=0;
+		for(TangShi ts:tangShiList){
+			tangshiIds[i]=ts.getId();
+			i++;
+		}
 	}
 
 	@Override
@@ -88,29 +90,28 @@ public class ListAllFragment extends SherlockListFragment {
 			
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				db.open();
-				List<TangShi> list=db.findTangshi(query);
-				db.close();
-				tangShiList.clear();
-				tangShiList.addAll(list);
-				( (BaseAdapter) getListAdapter() ).notifyDataSetChanged();
+				reloadTangshis(query);
 				return false;
 			}
 			
 			@Override
 			public boolean onQueryTextChange(String newText) {
 				if("".equals(newText)){
-					db.open();
-					List<TangShi> list=db.findTangshi(newText);
-					db.close();
-					tangShiList.clear();
-					tangShiList.addAll(list);
-					( (BaseAdapter) getListAdapter() ).notifyDataSetChanged();
+					reloadTangshis(newText);
 				}
 				return false;
 			}
 		});
     }
+	private void reloadTangshis(String text){
+		db.open();
+		List<TangShi> list=db.findTangshi(text);
+		db.close();
+		tangShiList.clear();
+		tangShiList.addAll(list);
+		resetTangshiIds();
+		( (BaseAdapter) getListAdapter() ).notifyDataSetChanged();
+	}
 	protected boolean isAlwaysExpanded() {
         return false;
     }

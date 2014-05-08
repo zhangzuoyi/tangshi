@@ -9,6 +9,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.zzy.xiaoyacz.data.SelectItem;
 import com.zzy.xiaoyacz.data.TestQuestion;
 //TODO 增加上一题按钮
-public class TestFragment extends SherlockFragment{
+public class TestFragment extends Fragment{
 	List<TestQuestion> questions;
 	int currentQuestionIndex;
 	TextView titleView;
