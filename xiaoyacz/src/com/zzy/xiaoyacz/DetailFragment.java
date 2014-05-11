@@ -21,9 +21,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import cn.waps.AppConnect;
 
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
@@ -98,6 +101,11 @@ public class DetailFragment extends Fragment{
 		}
 		
 		setHasOptionsMenu(true);
+		
+		//for WAPS
+        LinearLayout adlayout =(LinearLayout)view.findViewById(R.id.AdLinearLayout);
+        AppConnect.getInstance(getActivity()).showBannerAd(getActivity(), adlayout);
+        
 	    return view;
 	  }
 	

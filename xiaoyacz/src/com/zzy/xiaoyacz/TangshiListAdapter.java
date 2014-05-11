@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zzy.xiaoyacz.data.TangShi;
@@ -44,10 +45,10 @@ public class TangshiListAdapter  extends ArrayAdapter<TangShi>{
 			LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView=inflater.inflate(R.layout.list_item, parent,false);
 			vh=new ViewHolder();
-//			vh.imageView=(ImageView) convertView.findViewById(R.id.imageView1);
 			vh.textView1=(TextView) convertView.findViewById(R.id.textView1);
 			vh.textView2=(TextView) convertView.findViewById(R.id.textView2);
-			vh.iconView=(TextView) convertView.findViewById(R.id.iconTv);
+//			vh.iconView=(TextView) convertView.findViewById(R.id.iconTv);
+			vh.iconImage=(ImageView) convertView.findViewById(R.id.iconImage);
 			convertView.setTag(vh);
 		}else{
 			vh=(ViewHolder) convertView.getTag();
@@ -55,8 +56,8 @@ public class TangshiListAdapter  extends ArrayAdapter<TangShi>{
 		TangShi ts=data.get(position);
 		vh.textView1.setText(ts.getTitle());
 		vh.textView2.setText(ts.getAuthor());
-//		vh.imageView.setImageResource(R.drawable.align_left_icon);
-		vh.iconView.setText(Html.fromHtml(getIconText(ts.getType())));
+//		vh.iconView.setText(Html.fromHtml(getIconText(ts.getType())));
+		vh.iconImage.setImageResource(getIconImage(ts.getType()));
 		return convertView;
 	}
 	private String getIconText(String type){
@@ -66,9 +67,28 @@ public class TangshiListAdapter  extends ArrayAdapter<TangShi>{
 		}
 		return text;
 	}
+	private int getIconImage(String type){
+		if(Type.WJ.equals(type)){
+			return R.drawable.icon_wyjj;
+		}else if(Type.QJ.equals(type)){
+			return R.drawable.icon_qyjj;
+		}else if(Type.WL.equals(type)){
+			return R.drawable.icon_wyls;
+		}else if(Type.QL.equals(type)){
+			return R.drawable.icon_qyls;
+		}else if(Type.WG.equals(type)){
+			return R.drawable.icon_wygs;
+		}else if(Type.QG.equals(type)){
+			return R.drawable.icon_qygs;
+		}else if(Type.YF.equals(type)){
+			return R.drawable.icon_yf;
+		}else{
+			return R.drawable.icon_unknown;
+		}
+	}
 	static class ViewHolder{
-//		public ImageView imageView;
-		public TextView iconView;
+		public ImageView iconImage;
+//		public TextView iconView;
 		public TextView textView1;
 		public TextView textView2;
 	}

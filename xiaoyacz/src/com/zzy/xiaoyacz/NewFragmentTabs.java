@@ -16,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
+import cn.waps.AppConnect;
 
 public class NewFragmentTabs extends FragmentActivity {
 	private TabHost mTabHost;
@@ -33,6 +35,9 @@ public class NewFragmentTabs extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //for WAPS
+        AppConnect.getInstance("a91a1983fad383592173683879204c1e","default",this);
+        
         setContentView(R.layout.fragment_tabs);
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup();
@@ -85,6 +90,10 @@ public class NewFragmentTabs extends FragmentActivity {
         	
         });
         getOverflowMenu();//TODO 这个要研究一下
+        
+        //for WAPS
+        LinearLayout adlayout =(LinearLayout)findViewById(R.id.AdLinearLayout);
+        AppConnect.getInstance(this).showBannerAd(this, adlayout);
     }
     private void getOverflowMenu() {
 
@@ -128,6 +137,14 @@ public class NewFragmentTabs extends FragmentActivity {
 			finish();
 		}
 	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		//for WAPS
+		AppConnect.getInstance(this).close();
+	}
+
 	private class ViewPagerAdapter extends FragmentPagerAdapter{
 		FragmentActivity mActivity;
 		

@@ -3,26 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <ImageView
+        android:id="@+id/iconImage"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:layout_marginLeft="5dp"
-        android:src="@android:drawable/ic_dialog_info" /> -->
-    <TextView android:id="@+id/iconTv"
+        android:src="@android:drawable/ic_dialog_info" />
+    <!-- <TextView android:id="@+id/iconTv"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:textSize="14sp"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/type_icon_bg"/>
+        android:background="@drawable/type_icon_bg"/> -->
     
     <TextView
         android:id="@+id/textView1"
-        android:layout_toRightOf="@+id/iconTv"
+        android:layout_toRightOf="@+id/iconImage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
