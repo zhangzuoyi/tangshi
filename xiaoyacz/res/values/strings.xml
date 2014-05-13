@@ -17,6 +17,8 @@
     <string name="pre_question">上一题</string>
     <string name="next_question">下一题</string>
     <string name="restart">重新开始</string>
+    <string name="action_return">返回</string>
+    <string name="show_result">显示结果</string>
     <string name="collect">收藏</string>
     <string name="collect_success">收藏成功</string>
     <string name="cancel_collect_success">取消收藏成功</string>
@@ -27,5 +29,7 @@
     <string name="play">播放</string>
     <string name="netconection_not_available">网络不可用</string>
     <string name="only_play_wifi_on">只在连接WIFI时播放</string>
+    <string name="answer_right">回答正确</string>
+    <string name="answer_wrong">回答错误，正确答案是：%1$s</string>
 
 </resources>

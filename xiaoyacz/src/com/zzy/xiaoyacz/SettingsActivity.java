@@ -12,6 +12,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceActivity.Header;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 //TODO 这个类要再好好看看
 public class SettingsActivity extends PreferenceActivity {
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
@@ -19,9 +20,19 @@ public class SettingsActivity extends PreferenceActivity {
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		if(isSimplePreferences(this)){
 			this.addPreferencesFromResource(R.xml.pref_general);
 		}
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+	    case android.R.id.home:
+	        finish();
+	        return true;
+	    default: return super.onOptionsItemSelected(item);  
+	    }
 	}
 	@Override
 	public boolean onIsMultiPane() {

@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zzy.xiaoyacz.ResultDialogFragment.QuizDataAdapter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +23,7 @@ import android.widget.TabHost;
 import android.widget.Toast;
 import cn.waps.AppConnect;
 
-public class NewFragmentTabs extends FragmentActivity {
+public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter{
 	private TabHost mTabHost;
 	private ViewPager viewPager;
 	private List<FragmentInfo> infos;
@@ -194,4 +196,11 @@ public class NewFragmentTabs extends FragmentActivity {
             return v;
         }
     }
+	@Override
+	public void reloadQuiz() {
+		FragmentInfo info=infos.get(4);
+		TestFragment frag=(TestFragment) info.frag;
+		frag.refreshQuestion();
+		
+	}
 }

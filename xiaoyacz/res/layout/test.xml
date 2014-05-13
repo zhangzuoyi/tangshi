@@ -6,26 +6,54 @@
     <TextView android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:textSize="16sp"/>
-    <LinearLayout android:id="@+id/content_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"></LinearLayout>
+        android:textSize="18sp"/>
     <RadioGroup android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
         android:orientation="vertical">
         
     </RadioGroup>
-    <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <Button android:id="@+id/operation_button"
-            android:layout_alignParentRight="true"
+    <LinearLayout android:id="@+id/resultView"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:visibility="gone">
+        <ImageView android:id="@+id/resultImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:textSize="14sp"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            />
+        <TextView android:id="@+id/resultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
+    <Button android:id="@+id/operation_button"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:paddingTop="10dp"
+        android:drawableLeft="@drawable/next_icon"
+        android:text="@string/next_question"
+        android:textSize="14sp"/>
+    <Button android:id="@+id/result_button"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:paddingTop="10dp"
+        android:text="@string/show_result"
+        android:visibility="gone"
+        android:textSize="14sp"/>
+    <TextView android:id="@+id/testIndicator"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:padding="10dp"
+        android:textSize="16sp"/>
         
 </LinearLayout>

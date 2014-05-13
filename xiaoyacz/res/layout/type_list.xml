@@ -16,12 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/wj_button"/>
+            android:background="@drawable/wj_button_selector"/>
         <Button android:id="@+id/type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/qj_button"/>
+            android:background="@drawable/qj_button_selector"/>
     </LinearLayout>
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -31,12 +31,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/wl_button"/>
+            android:background="@drawable/wl_button_selector"/>
         <Button android:id="@+id/type4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/ql_button"/>
+            android:background="@drawable/ql_button_selector"/>
     </LinearLayout>
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -46,12 +46,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/wg_button"/>
+            android:background="@drawable/wg_button_selector"/>
         <Button android:id="@+id/type6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/qg_button"/>
+            android:background="@drawable/qg_button_selector"/>
     </LinearLayout>
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:background="@drawable/yf_button"/>
+            android:background="@drawable/yf_button_selector"/>
     </LinearLayout>
 
 </LinearLayout>

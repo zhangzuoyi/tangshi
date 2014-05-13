@@ -10,6 +10,8 @@ public class TestQuestion implements Serializable {
 	private String type;//类型（ss:单选，ms:多选，fill:填空）
 	private List<SelectItem> options;//选择项(json)
 	private String answer;//答案
+	private String userAnswer;//用户的回答
+	private boolean isCorrect;//是否回答正确
 	public long getId() {
 		return id;
 	}
@@ -39,6 +41,18 @@ public class TestQuestion implements Serializable {
 	}
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+	public String getUserAnswer() {
+		return userAnswer;
+	}
+	public void setUserAnswer(String userAnswer) {
+		this.userAnswer = userAnswer;
+	}
+	public boolean isCorrect() {
+		return isCorrect;
+	}
+	public void setCorrect(boolean isCorrect) {
+		this.isCorrect = isCorrect;
 	}
 	
 }

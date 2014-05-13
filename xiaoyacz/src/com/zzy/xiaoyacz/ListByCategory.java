@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zzy.xiaoyacz.data.Author;
 import com.zzy.xiaoyacz.data.TangShi;
@@ -69,7 +70,9 @@ public class ListByCategory extends ListActivity {
 				i.putExtra("ts", ts);*/
 				String title=null;
 				Intent i=new Intent(ListByCategory.this,DetailFragmentActivity.class);
-				i.putExtra(DetailFragmentActivity.CURRENTINDEX, position);
+				//有HeaderView时，position会从1开始，最好用下面的方法来获得当前选项
+				TangShi ts=(TangShi) getListView().getItemAtPosition(position);
+				i.putExtra(DetailFragmentActivity.CURRENTINDEX, getPositionInTangshiList(ts));
 //				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
 				i.putExtra(DetailFragmentActivity.TANGSHIIDS, tangshiIds);
 				if(type.equals(TYPE_AUTHOR)){
@@ -85,6 +88,14 @@ public class ListByCategory extends ListActivity {
 		TextView title=(TextView) findViewById(R.id.title);
 		title.setText(param);//设置分类标题
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+	private int getPositionInTangshiList(TangShi ts){
+		for(int i=0;i<tangshiIds.length;i++){
+			if(ts.getId()==tangshiIds[i]){
+				return i;
+			}
+		}
+		return 0;
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

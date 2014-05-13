@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quiz_result">测验结果</string>
+    <string name="quiz_result_message2">您答对了<b>%1$d</b>题中的<b>%2$d题</b></string>
+    <string name="result_100">太棒了，你得了满分！</string>
+    <string name="result_90">太好了！</string>
+    <string name="result_80">很好！</string>
+    <string name="result_70">还不错！</string>
+    <string name="result_60">马马虎虎，及格了！</string>
+    <string name="result_50">要加油了！</string>
+    <string name="result_30">太差了，你睡着了吗？</string>
+</resources>

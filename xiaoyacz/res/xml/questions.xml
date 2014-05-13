@@ -164,4 +164,14 @@
 	    </options>
 	    <answer>C</answer>
 	</textQuestion>
+	<textQuestion>
+	    <question>“白日依山尽，黄河入海流”，这是诗人在（ ）看到的景色。</question>
+	    <type>ss</type>
+	    <options>
+	        <A>黄鹤楼</A>
+	        <B>望湖楼</B>
+	        <C>鹳雀楼</C>
+	    </options>
+	    <answer>C</answer>
+	</textQuestion>
 </textQuestions>

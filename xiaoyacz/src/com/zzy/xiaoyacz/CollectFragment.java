@@ -1,6 +1,5 @@
 package com.zzy.xiaoyacz;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -15,6 +14,7 @@ import com.zzy.xiaoyacz.db.MyDB;
 
 public class CollectFragment extends ListFragment {
 	private List<TangShi> tangShiList;
+	private long[] tangshiIds;
 	private MyDB db;
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -22,6 +22,12 @@ public class CollectFragment extends ListFragment {
 		db.open();
 		tangShiList=db.findTangshiCollected();
 		db.close();
+		tangshiIds=new long[tangShiList.size()];
+		int i=0;
+		for(TangShi ts:tangShiList){
+			tangshiIds[i]=ts.getId();
+			i++;
+		}
 		setListAdapter(new TangshiListAdapter(getActivity(),tangShiList));
 		getListView().setOnItemClickListener(new OnItemClickListener(){
 
@@ -33,7 +39,8 @@ public class CollectFragment extends ListFragment {
 //				i.putExtra("ts", ts);
 				Intent i=new Intent(getActivity(),DetailFragmentActivity.class);
 				i.putExtra(DetailFragmentActivity.CURRENTINDEX, position);
-				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
+//				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
+				i.putExtra(DetailFragmentActivity.TANGSHIIDS, tangshiIds);
 				i.putExtra(DetailFragmentActivity.TITLE, "收藏诗集");
 				startActivity(i);
 			}
