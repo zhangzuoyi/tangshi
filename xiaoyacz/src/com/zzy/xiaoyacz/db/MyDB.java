@@ -16,8 +16,15 @@ public class MyDB {
 	private SQLiteDatabase db;
 	private final Context context;
 	private final MyDBhelper dbhelper;
+	private static MyDB mydb;
 
-	public MyDB(Context c) {
+	public static MyDB getInstance(Context c){
+		if(mydb==null){
+			mydb=new MyDB(c);
+		}
+		return mydb;
+	}
+	private MyDB(Context c) {
 		context = c;
 		dbhelper = new MyDBhelper(context, Constants.DATABASE_NAME, null,
 				Constants.DATABASE_VERSION);

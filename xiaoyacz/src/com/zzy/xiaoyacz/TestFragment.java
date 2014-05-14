@@ -35,7 +35,11 @@ public class TestFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		loadQuestions();
-		currentQuestionIndex=0;
+		if(savedInstanceState!=null){
+			currentQuestionIndex=savedInstanceState.getInt("currentQuestionIndex",0);
+		}else{
+			currentQuestionIndex=0;
+		}
 		View view = inflater.inflate(R.layout.test, container, false);
 		titleView=(TextView) view.findViewById(R.id.title);
 		testIndicator=(TextView) view.findViewById(R.id.testIndicator);
@@ -100,6 +104,13 @@ public class TestFragment extends Fragment{
 		updateUI();
 		return view;
 	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("currentQuestionIndex", currentQuestionIndex);
+	}
+
 	private void showResultView(boolean isCorrect, String answer){
 		resultView.setVisibility(View.VISIBLE);
 		if(isCorrect){

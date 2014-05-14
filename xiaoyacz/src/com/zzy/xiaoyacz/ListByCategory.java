@@ -33,7 +33,7 @@ public class ListByCategory extends ListActivity {
 		setContentView(R.layout.list_by_category);
 		type=getIntent().getStringExtra("type");
 		param=getIntent().getStringExtra("param");
-		db=new MyDB(this);
+		db=MyDB.getInstance(this);
 		db.open();
 		if(type.equals(TYPE_AUTHOR)){
 			tangShiList=db.findTangshiByAuthor(param);

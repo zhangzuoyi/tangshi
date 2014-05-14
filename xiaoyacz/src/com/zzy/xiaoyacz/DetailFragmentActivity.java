@@ -26,7 +26,7 @@ public class DetailFragmentActivity extends FragmentActivity{
 		viewPager=(ViewPager) findViewById(R.id.viewpager);
 		currentIndex=getIntent().getIntExtra(CURRENTINDEX, 0);
 		tangshiIds=getIntent().getLongArrayExtra(TANGSHIIDS);
-		db=new MyDB(this);
+		db=MyDB.getInstance(this);
 		viewPager.setAdapter(new ViewPagerAdapter(this));
 		viewPager.setCurrentItem(currentIndex);
 		getActionBar().setDisplayHomeAsUpEnabled(true);

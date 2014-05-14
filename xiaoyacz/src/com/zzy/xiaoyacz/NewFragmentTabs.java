@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zzy.xiaoyacz.ResultDialogFragment.QuizDataAdapter;
+import com.zzy.xiaoyacz.util.WapsUtil;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,11 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
 	private long currentBackPressedTime = 0;
 	// 退出间隔
 	private static final int BACK_PRESSED_INTERVAL = 2000;
+	private static final String LIST_TAG="list";
+	private static final String TYPE_TAG="type";
+	private static final String AUTHOR_TAG="author";
+	private static final String COLLECT_TAG="collect";
+	private static final String TEST_TAG="test";
 
 
     @Override
@@ -38,7 +44,7 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
         super.onCreate(savedInstanceState);
 
         //for WAPS
-        AppConnect.getInstance("a91a1983fad383592173683879204c1e","default",this);
+        AppConnect.getInstance(this);
         
         setContentView(R.layout.fragment_tabs);
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
@@ -46,15 +52,16 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
         viewPager=(ViewPager) findViewById(R.id.viewpager);
         
         infos=new ArrayList<FragmentInfo>();
-        infos.add(new FragmentInfo("list","列表",ListAllFragment.class));
-        infos.add(new FragmentInfo("type","分类",ByTypeFragment.class));
-        infos.add(new FragmentInfo("author","诗人",ByAuthorFragment.class));
-        infos.add(new FragmentInfo("collect","收藏",CollectFragment.class));
-        infos.add(new FragmentInfo("test","练习",TestFragment.class));
+        infos.add(new FragmentInfo(LIST_TAG,"列表",ListAllFragment.class));
+        infos.add(new FragmentInfo(TYPE_TAG,"分类",ByTypeFragment.class));
+        infos.add(new FragmentInfo(AUTHOR_TAG,"诗人",ByAuthorFragment.class));
+        infos.add(new FragmentInfo(COLLECT_TAG,"收藏",CollectFragment.class));
+        infos.add(new FragmentInfo(TEST_TAG,"练习",TestFragment.class));
         for(FragmentInfo info:infos){
         	mTabHost.addTab(mTabHost.newTabSpec(info.tag).setIndicator(info.title).setContent(new EmptyTabFactory(this)));
         }
         viewPager.setAdapter(new ViewPagerAdapter(this));
+        viewPager.setOffscreenPageLimit(infos.size()-1);//保留几个Fragment
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
 
     		@Override
@@ -196,11 +203,16 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
             return v;
         }
     }
+	//重新加载练习试题
 	@Override
 	public void reloadQuiz() {
-		FragmentInfo info=infos.get(4);
-		TestFragment frag=(TestFragment) info.frag;
-		frag.refreshQuestion();
+		for(FragmentInfo info:infos){
+			if(info.tag.equals(TEST_TAG)){//练习的Fragment
+				TestFragment frag=(TestFragment) info.frag;
+				frag.refreshQuestion();
+				break;
+			}
+		}
 		
 	}
 }

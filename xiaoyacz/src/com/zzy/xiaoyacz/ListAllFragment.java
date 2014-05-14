@@ -28,7 +28,7 @@ public class ListAllFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		db=new MyDB(getActivity());
+		db=MyDB.getInstance(getActivity());
 		db.open();
 		tangShiList=db.tangShiList();
 		db.close();

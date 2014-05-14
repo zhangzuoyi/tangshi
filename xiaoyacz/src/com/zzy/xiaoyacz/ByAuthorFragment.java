@@ -75,7 +75,7 @@ public class ByAuthorFragment extends ListFragment {
 		sectionView.setText(author.getInitial());
 	}
 	private void initAuthors(){
-		db=new MyDB(getActivity());
+		db=MyDB.getInstance(getActivity());
 		db.open();
 		authors=db.authorList();
 		db.close();

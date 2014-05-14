@@ -15,10 +15,12 @@ import com.zzy.xiaoyacz.db.MyDB;
 public class CollectFragment extends ListFragment {
 	private List<TangShi> tangShiList;
 	private long[] tangshiIds;
-	private MyDB db;
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		db=new MyDB(getActivity());
+		init();
+	}
+	private void init(){
+		MyDB db=MyDB.getInstance(getActivity());
 		db.open();
 		tangShiList=db.findTangshiCollected();
 		db.close();
@@ -34,12 +36,8 @@ public class CollectFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-//				TangShi ts=tangShiList.get(position);
-//				Intent i=new Intent(getActivity(),DetailActivity.class);
-//				i.putExtra("ts", ts);
 				Intent i=new Intent(getActivity(),DetailFragmentActivity.class);
 				i.putExtra(DetailFragmentActivity.CURRENTINDEX, position);
-//				i.putParcelableArrayListExtra(DetailFragmentActivity.TANGSHIS, (ArrayList<TangShi>)tangShiList);
 				i.putExtra(DetailFragmentActivity.TANGSHIIDS, tangshiIds);
 				i.putExtra(DetailFragmentActivity.TITLE, "收藏诗集");
 				startActivity(i);
@@ -47,4 +45,10 @@ public class CollectFragment extends ListFragment {
 			
 		});
 	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		init();
+	}
+	
 }
