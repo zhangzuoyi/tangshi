@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zzy.xiaoyacz"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="1.1.1" >
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
     <meta-data android:name="APP_ID" android:value="a91a1983fad383592173683879204c1e"/>
-	<meta-data android:name="APP_PID" android:value="163"/>
+	<meta-data android:name="APP_PID" android:value="appChina"/>
 	<!-- //default 万普平台(默认)
 //QQ 腾讯应用
 //google GooglePlay 市场

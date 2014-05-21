@@ -6,7 +6,7 @@ package com.zzy.xiaoyacz.util;
  */
 public class WapsUtil {
 	public static final String APP_ID="a91a1983fad383592173683879204c1e";
-	public static final String APP_PID="baidu";
+	public static final String APP_PID="appChina";
 //default 万普平台(默认)
 //QQ 腾讯应用
 //google GooglePlay 市场

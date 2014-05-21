@@ -44,7 +44,7 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
         super.onCreate(savedInstanceState);
 
         //for WAPS
-        AppConnect.getInstance(this);
+        AppConnect.getInstance(WapsUtil.APP_ID, WapsUtil.APP_PID, this);
         
         setContentView(R.layout.fragment_tabs);
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
