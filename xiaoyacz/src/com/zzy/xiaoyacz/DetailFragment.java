@@ -1,11 +1,8 @@
 package com.zzy.xiaoyacz;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,19 +15,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import cn.waps.AppConnect;
 
 import com.zzy.xiaoyacz.data.TangShi;
 import com.zzy.xiaoyacz.db.MyDB;
 import com.zzy.xiaoyacz.util.ConfigUtil;
+import com.zzy.xiaoyacz.util.FeiwoUtil;
 import com.zzy.xiaoyacz.util.NetConnectionUtil;
 import com.zzy.xiaoyacz.util.StringUtil;
 
@@ -102,9 +95,9 @@ public class DetailFragment extends Fragment{
 		
 		setHasOptionsMenu(true);
 		
-		//for WAPS
+        //Feiwo ad
         LinearLayout adlayout =(LinearLayout)view.findViewById(R.id.AdLinearLayout);
-        AppConnect.getInstance(getActivity()).showBannerAd(getActivity(), adlayout);
+        FeiwoUtil.addFeiwoAd(adlayout,getActivity());
         
 	    return view;
 	  }

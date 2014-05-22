@@ -4,9 +4,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zzy.xiaoyacz.ResultDialogFragment.QuizDataAdapter;
-import com.zzy.xiaoyacz.util.WapsUtil;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +19,11 @@ import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
-import cn.waps.AppConnect;
+
+import com.feiwoone.banner.AdBanner;
+import com.feiwoone.banner.RecevieAdListener;
+import com.zzy.xiaoyacz.ResultDialogFragment.QuizDataAdapter;
+import com.zzy.xiaoyacz.util.FeiwoUtil;
 
 public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter{
 	private TabHost mTabHost;
@@ -42,9 +43,6 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //for WAPS
-        AppConnect.getInstance(WapsUtil.APP_ID, WapsUtil.APP_PID, this);
         
         setContentView(R.layout.fragment_tabs);
         mTabHost = (TabHost)findViewById(android.R.id.tabhost);
@@ -99,11 +97,11 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
         	
         });
         getOverflowMenu();//TODO 这个要研究一下
-        
-        //for WAPS
+        //Feiwo ad
         LinearLayout adlayout =(LinearLayout)findViewById(R.id.AdLinearLayout);
-        AppConnect.getInstance(this).showBannerAd(this, adlayout);
+        FeiwoUtil.addFeiwoAd(adlayout,this);
     }
+
     private void getOverflowMenu() {
 
         try {
@@ -150,8 +148,6 @@ public class NewFragmentTabs extends FragmentActivity implements QuizDataAdapter
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//for WAPS
-		AppConnect.getInstance(this).close();
 	}
 
 	private class ViewPagerAdapter extends FragmentPagerAdapter{
