@@ -60,13 +60,12 @@
             android:label="@string/title_activity_detail" >
         </activity>
         
-        <!-- Feiwo广告条 -->
+        <!-- for feiwo ad -->
         <activity
-            android:name="com.feiwoone.banner.WebViewActivity"
+            android:name="com.fw.bn.WebViewActivity"
             android:configChanges="keyboardHidden|orientation" >
         </activity>
--
-        <receiver android:name="com.feiwoone.banner.AdReceiver" >
+        <receiver android:name="com.fw.bn.AdReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <data android:scheme="package" />
@@ -74,7 +73,7 @@
 			<intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>            
-        </receiver>
+        </receiver> 
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.zzy.xiaoyacz;
 
+import opensource.jpinyin.PinyinFormat;
+import opensource.jpinyin.PinyinHelper;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -26,6 +28,7 @@ import com.zzy.xiaoyacz.util.ConfigUtil;
 import com.zzy.xiaoyacz.util.FeiwoUtil;
 import com.zzy.xiaoyacz.util.NetConnectionUtil;
 import com.zzy.xiaoyacz.util.StringUtil;
+import com.zzy.xiaoyacz.widget.MyTextView;
 
 public class DetailFragment extends Fragment{
 	private TangShi ts;
@@ -63,7 +66,8 @@ public class DetailFragment extends Fragment{
 	    final View view = (View) inflater.inflate(
 	        R.layout.activity_detail, container, false);
 	    TextView title=(TextView) view.findViewById(R.id.title);
-		TextView author=(TextView)view. findViewById(R.id.author);
+//		TextView author=(TextView)view. findViewById(R.id.author);
+		MyTextView author=(MyTextView)view. findViewById(R.id.author);
 		TextView content=(TextView)view. findViewById(R.id.content);
 		TextView commentsLabel=(TextView) view.findViewById(R.id.comments_label);
 		TextView comments=(TextView) view.findViewById(R.id.comments);
@@ -72,7 +76,8 @@ public class DetailFragment extends Fragment{
 		TextView explainLabel=(TextView) view.findViewById(R.id.explain_label);
 		TextView explain=(TextView) view.findViewById(R.id.explain);
 		title.setText(ts.getTitle());
-		author.setText(ts.getAuthor());
+//		title.setText(Html.fromHtml("<ruby>朱<rp>(</rp><rt>zhū</rt><rp>)</rp>&nbsp;</ruby><ruby>雀<rp>(</rp><rt>que</rt><rp>)</rp>&nbsp;</ruby>"));
+		author.setFullText(PinyinHelper.convertToPinyinString(ts.getAuthor(), " ", PinyinFormat.WITH_TONE_MARK), ts.getAuthor());
 		content.setText(Html.fromHtml(ts.getContent()));
 		if(StringUtil.isBlank(ts.getComments())){
 			commentsLabel.setVisibility(View.GONE);

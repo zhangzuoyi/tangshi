@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.feiwoone.banner.AdBanner;
-import com.feiwoone.banner.RecevieAdListener;
-import com.zzy.xiaoyacz.R;
+import com.fw.bn.AdBanner;
+import com.fw.bn.RecevieAdListener;
 
 public class FeiwoUtil {
 	public static final String APP_KEY="iGjvOrIpiu2sHL202Dh6zlv6";

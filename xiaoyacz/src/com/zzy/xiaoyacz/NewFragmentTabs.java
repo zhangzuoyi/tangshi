@@ -20,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.feiwoone.banner.AdBanner;
-import com.feiwoone.banner.RecevieAdListener;
 import com.zzy.xiaoyacz.ResultDialogFragment.QuizDataAdapter;
 import com.zzy.xiaoyacz.util.FeiwoUtil;
 
