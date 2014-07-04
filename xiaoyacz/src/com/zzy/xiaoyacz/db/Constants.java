@@ -2,7 +2,7 @@ package com.zzy.xiaoyacz.db;
 
 public class Constants {
 	public static final String DATABASE_NAME="tangshidb";
-	public static final int DATABASE_VERSION=1;
+	public static final int DATABASE_VERSION=2;
 	public static final String TABLE_NAME="tangshi";
 	public static final String TITLE="title";
 	public static final String AUTHOR="author";
@@ -15,6 +15,9 @@ public class Constants {
 	public static final String COLLECT="collect";
 	public static final String TRANSLATE="translate";
 	public static final String COMMENTS="comments";
+	public static final String PY_TITLE="pinyinTitle";
+	public static final String PY_AUTHOR="pinyinAuthor";
+	public static final String PY_CONTENT="pinyinContent";
 	
 	public static final String TABLE_QUESTIONS="test_question";
 	public static final String QUESTION="question";

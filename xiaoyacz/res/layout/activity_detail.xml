@@ -9,35 +9,58 @@
     android:layout_above="@+id/AdLinearLayout">
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
+    <TextView 
         android:id="@+id/title"
         style="@style/TitleStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:visibility="gone"/>
     <com.zzy.xiaoyacz.widget.MyTextView 
+        android:id="@+id/titlePinyin"
+        style="@style/TitleStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"/>
+    <TextView 
         android:id="@+id/author"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:textStyle="italic"
+        android:layout_below="@id/titlePinyin"
+        android:gravity="center"
+        android:layout_marginTop="5dip"
+        android:visibility="gone"/>
+    <com.zzy.xiaoyacz.widget.MyTextView 
+        android:id="@+id/authorPinyin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/author"
         android:gravity="center"
         android:layout_marginTop="5dip"/>
     <TextView
         android:id="@+id/content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/author"
+        android:layout_below="@id/authorPinyin"
          android:gravity="center"
         android:textSize="22sp"
         android:layout_marginTop="5dip"
-        android:lineSpacingMultiplier="1.5"/>
+        android:lineSpacingMultiplier="1.5"
+        android:visibility="gone"/>
+    <com.zzy.xiaoyacz.widget.MyTextView2 
+        android:id="@+id/contentPinyin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+         android:gravity="center"
+        android:textSize="22sp"
+        android:layout_marginTop="5dip"/>
     <TextView
         android:id="@+id/comments_label"
         style="@style/DetailLabelStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content"
+        android:layout_below="@id/contentPinyin"
         android:text="@string/comments" />
     <TextView
         android:id="@+id/comments"

@@ -16,6 +16,9 @@ public class TangShi implements Parcelable{
 	private int collectStatus;//收藏状态，0未收藏，1已收藏
 	private String comments;//注释
 	private String translate;//译文
+	private String pinyinTitle;
+	private String pinyinAuthor;
+	private String pinyinContent;
 	public TangShi(){
 		
 	}
@@ -91,6 +94,25 @@ public class TangShi implements Parcelable{
 	public void setTranslate(String translate) {
 		this.translate = translate;
 	}
+	
+	public String getPinyinTitle() {
+		return pinyinTitle;
+	}
+	public void setPinyinTitle(String pinyinTitle) {
+		this.pinyinTitle = pinyinTitle;
+	}
+	public String getPinyinAuthor() {
+		return pinyinAuthor;
+	}
+	public void setPinyinAuthor(String pinyinAuthor) {
+		this.pinyinAuthor = pinyinAuthor;
+	}
+	public String getPinyinContent() {
+		return pinyinContent;
+	}
+	public void setPinyinContent(String pinyinContent) {
+		this.pinyinContent = pinyinContent;
+	}
 	@Override
 	public int describeContents() {
 		return 0;
@@ -109,6 +131,9 @@ public class TangShi implements Parcelable{
 		dest.writeInt(collectStatus);
 		dest.writeString(comments);
 		dest.writeString(translate);
+		dest.writeString(pinyinTitle);
+		dest.writeString(pinyinAuthor);
+		dest.writeString(pinyinContent);
 	}
 	
 	public static final Parcelable.Creator<TangShi> CREATOR
@@ -135,5 +160,8 @@ public class TangShi implements Parcelable{
 		collectStatus=in.readInt();
 		comments=in.readString();
 		translate=in.readString();
+		pinyinTitle=in.readString();
+		pinyinAuthor=in.readString();
+		pinyinContent=in.readString();
 	}
 }

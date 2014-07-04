@@ -106,6 +106,9 @@ public class MyDB {
 				ts.setTitle(c.getString(c.getColumnIndex(Constants.TITLE)));
 				ts.setType(c.getString(c.getColumnIndex(Constants.TYPE)));
 				ts.setCollectStatus(c.getInt(c.getColumnIndex(Constants.COLLECT)));
+				ts.setPinyinAuthor(c.getString(c.getColumnIndex(Constants.PY_AUTHOR)));
+				ts.setPinyinContent(c.getString(c.getColumnIndex(Constants.PY_CONTENT)));
+				ts.setPinyinTitle(c.getString(c.getColumnIndex(Constants.PY_TITLE)));
 				list.add(ts);
 			}while(c.moveToNext());
 		}

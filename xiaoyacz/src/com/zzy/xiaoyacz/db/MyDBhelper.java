@@ -36,6 +36,9 @@ public class MyDBhelper extends SQLiteOpenHelper {
 			+ Constants.COMMENTS + " text, "
 			+ Constants.TRANSLATE + " text, "
 			+ Constants.TYPE + " text, "
+			+ Constants.PY_AUTHOR + " text, "
+			+ Constants.PY_CONTENT + " text, "
+			+ Constants.PY_TITLE + " text, "
 			+ Constants.IMG + " text);";
 	private static final String CREATE_TABLE_QUESTION = "create table "
 			+ Constants.TABLE_QUESTIONS + " (" 
@@ -108,6 +111,12 @@ public class MyDBhelper extends SQLiteOpenHelper {
 					cv.put(Constants.COMMENTS, obj.getString(Constants.COMMENTS));
 				if(obj.has(Constants.TRANSLATE))
 					cv.put(Constants.TRANSLATE, obj.getString(Constants.TRANSLATE));
+				if(obj.has(Constants.PY_AUTHOR))
+					cv.put(Constants.PY_AUTHOR, obj.getString(Constants.PY_AUTHOR));
+				if(obj.has(Constants.PY_CONTENT))
+					cv.put(Constants.PY_CONTENT, obj.getString(Constants.PY_CONTENT));
+				if(obj.has(Constants.PY_TITLE))
+					cv.put(Constants.PY_TITLE, obj.getString(Constants.PY_TITLE));
 				cv.put(Constants.COLLECT, 0);
 				db.insert(Constants.TABLE_NAME, null, cv);
 			}

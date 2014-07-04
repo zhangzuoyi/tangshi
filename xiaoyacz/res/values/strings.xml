@@ -27,6 +27,7 @@
     <string name="explain">赏析</string>
     <string name="about">关于</string>
     <string name="play">播放</string>
+    <string name="pinyin">拼音</string>
     <string name="netconection_not_available">网络不可用</string>
     <string name="only_play_wifi_on">只在连接WIFI时播放</string>
     <string name="answer_right">回答正确</string>

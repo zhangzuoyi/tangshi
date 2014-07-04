@@ -10,5 +10,11 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="@string/collect"/>
+    <item
+        android:id="@+id/pinyin"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/pinyin"
+        android:checkable="true"/>
 
 </menu>

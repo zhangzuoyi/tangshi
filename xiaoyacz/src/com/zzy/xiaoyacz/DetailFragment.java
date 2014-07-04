@@ -1,7 +1,5 @@
 package com.zzy.xiaoyacz;
 
-import opensource.jpinyin.PinyinFormat;
-import opensource.jpinyin.PinyinHelper;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -12,6 +10,8 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +29,7 @@ import com.zzy.xiaoyacz.util.FeiwoUtil;
 import com.zzy.xiaoyacz.util.NetConnectionUtil;
 import com.zzy.xiaoyacz.util.StringUtil;
 import com.zzy.xiaoyacz.widget.MyTextView;
+import com.zzy.xiaoyacz.widget.MyTextView2;
 
 public class DetailFragment extends Fragment{
 	private TangShi ts;
@@ -36,6 +37,12 @@ public class DetailFragment extends Fragment{
 //	private SeekBar seekbar;
 	private MenuItem playItem;
 	private MediaPlayer mediaPlayer;
+	private TextView title;
+	private MyTextView titlePinyin;
+	private TextView author;
+	private MyTextView authorPinyin;
+	private TextView content;
+	private MyTextView2 contentPinyin;
 	private MyDB db;
 	boolean onlyWifi;
 	boolean needToResume = false;//音频是否需要继续播放
@@ -65,10 +72,12 @@ public class DetailFragment extends Fragment{
 
 	    final View view = (View) inflater.inflate(
 	        R.layout.activity_detail, container, false);
-	    TextView title=(TextView) view.findViewById(R.id.title);
-//		TextView author=(TextView)view. findViewById(R.id.author);
-		MyTextView author=(MyTextView)view. findViewById(R.id.author);
-		TextView content=(TextView)view. findViewById(R.id.content);
+	    title=(TextView) view.findViewById(R.id.title);
+	    titlePinyin=(MyTextView) view.findViewById(R.id.titlePinyin);
+		author=(TextView)view. findViewById(R.id.author);
+		authorPinyin=(MyTextView)view. findViewById(R.id.authorPinyin);
+		content=(TextView)view. findViewById(R.id.content);
+		contentPinyin=(MyTextView2)view. findViewById(R.id.contentPinyin);
 		TextView commentsLabel=(TextView) view.findViewById(R.id.comments_label);
 		TextView comments=(TextView) view.findViewById(R.id.comments);
 		TextView translateLabel=(TextView) view.findViewById(R.id.translate_label);
@@ -76,9 +85,11 @@ public class DetailFragment extends Fragment{
 		TextView explainLabel=(TextView) view.findViewById(R.id.explain_label);
 		TextView explain=(TextView) view.findViewById(R.id.explain);
 		title.setText(ts.getTitle());
-//		title.setText(Html.fromHtml("<ruby>朱<rp>(</rp><rt>zhū</rt><rp>)</rp>&nbsp;</ruby><ruby>雀<rp>(</rp><rt>que</rt><rp>)</rp>&nbsp;</ruby>"));
-		author.setFullText(PinyinHelper.convertToPinyinString(ts.getAuthor(), " ", PinyinFormat.WITH_TONE_MARK), ts.getAuthor());
+		titlePinyin.setFullText(ts.getPinyinTitle(), ts.getTitle());
+		author.setText(ts.getAuthor());
+		authorPinyin.setFullText(ts.getPinyinAuthor(), ts.getAuthor());
 		content.setText(Html.fromHtml(ts.getContent()));
+		contentPinyin.setFullText(ts.getPinyinContent(), ts.getContent());
 		if(StringUtil.isBlank(ts.getComments())){
 			commentsLabel.setVisibility(View.GONE);
 			comments.setVisibility(View.GONE);
@@ -106,6 +117,42 @@ public class DetailFragment extends Fragment{
         
 	    return view;
 	  }
+	
+	private void setTangshiShow(){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean showPinyin=prefs.getBoolean("showPinyin", true);
+		if(showPinyin){
+			title.setVisibility(View.GONE);
+			titlePinyin.setVisibility(View.VISIBLE);
+			author.setVisibility(View.GONE);
+			authorPinyin.setVisibility(View.VISIBLE);
+			content.setVisibility(View.GONE);
+			contentPinyin.setVisibility(View.VISIBLE);
+		}else{
+			title.setVisibility(View.VISIBLE);
+			titlePinyin.setVisibility(View.GONE);
+			author.setVisibility(View.VISIBLE);
+			authorPinyin.setVisibility(View.GONE);
+			content.setVisibility(View.VISIBLE);
+			contentPinyin.setVisibility(View.GONE);
+		}
+	}
+	
+	private void fillContent(LinearLayout contentContainer, TangShi ts){
+		String[] ps=ts.getPinyinContent().split("<br />");
+		String[] cs=ts.getContent().split("<br />");
+		for(int i=0;i<ps.length;i++){
+//			MyTextView tv=(MyTextView) getActivity().getLayoutInflater().inflate(R.layout.content_textview, null);
+//			android:gravity="center"
+//			        android:textSize="22sp"
+//			        android:lineSpacingMultiplier="1.2"
+			MyTextView tv=new MyTextView(getActivity());
+			tv.setGravity(Gravity.CENTER);
+			tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
+			tv.setFullText(ps[i].trim(), cs[i].trim());
+			contentContainer.addView(tv);
+		}
+	}
 	
 	@Override
 	public void onPause() {
@@ -139,12 +186,24 @@ public class DetailFragment extends Fragment{
 		setCollectMenuItemIcon(menu.findItem(R.id.collect));
 		playItem=menu.findItem(R.id.playItem);
 		initPlayItem();
+		setPinyinItem(menu.findItem(R.id.pinyin));
 	}
 	private void initPlayItem(){
 		playItem.setIcon(android.R.drawable.ic_media_play);
 		if(StringUtil.isBlank(ts.getAudio())){
 			playItem.setVisible(false);
 		}
+	}
+	private void setPinyinItem(MenuItem item){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean showPinyin=prefs.getBoolean("showPinyin", true);
+		item.setChecked(showPinyin);
+		if(item.isChecked()){
+			item.setIcon(R.drawable.pinyin_on);
+		}else{
+			item.setIcon(R.drawable.pinyin_off);
+		}
+		setTangshiShow();
 	}
 
 	@Override
@@ -165,6 +224,16 @@ public class DetailFragment extends Fragment{
 			setCollectMenuItemIcon(item);
 		}else if(item.getItemId()==R.id.playItem){
 			playAudio();
+		}else if(item.getItemId()==R.id.pinyin){
+			boolean showPinyin=false;
+			if(item.isChecked()){
+				showPinyin=false;
+			}else{
+				showPinyin=true;
+			}
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			prefs.edit().putBoolean("showPinyin", showPinyin).commit();
+			setPinyinItem(item);
 		}
 		return true;
 	}
